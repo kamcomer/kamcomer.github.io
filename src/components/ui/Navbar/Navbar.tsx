@@ -1,36 +1,9 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import ThemeToggle from './ThemeToggle';
-
-interface NavItem {
-  to: string;
-  label: string;
-  children?: NavItem[];
-}
-
-interface NavbarProps {
-  isAlwaysVisible?: boolean;
-}
-
-const navLinks: NavItem[] = [
-  { to: '/', label: 'Home' },
-  { to: '/projects', label: 'Projects' },
-  { to: '/blog', label: 'Blog' },
-  { to: '/about', label: 'About' },
-  {
-    to: '/dev',
-    label: 'Dev',
-    children: [
-      { to: '/demo/terminal', label: 'Terminal' },
-      { to: '/demo/github-activity', label: 'Activity' },
-      { to: '/demo/code-playground', label: 'Playground' },
-      { to: '/demo/ascii-art', label: 'ASCII' },
-      { to: '/demo/achievements', label: 'Badges' },
-      { to: '/demo/effects', label: 'Effects' },
-    ],
-  },
-];
+import React, { useEffect, useState, useRef } from "react";
+import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import ThemeToggle from "../ThemeToggle" ;
+import { NavItem, NavbarProps } from "./types";
+import { navLinks } from "./navbarConfig";
 
 const Navbar: React.FC<NavbarProps> = ({ isAlwaysVisible = false }) => {
   const [isVisible, setIsVisible] = useState(isAlwaysVisible);
@@ -40,30 +13,35 @@ const Navbar: React.FC<NavbarProps> = ({ isAlwaysVisible = false }) => {
 
   useEffect(() => {
     if (isAlwaysVisible) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setIsVisible(true);
       setIsVisible(true);
       return;
     }
     const handleScroll = () => {
       setIsVisible(window.scrollY > 5);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
     const timeout = setTimeout(() => {
       setIsVisible(window.scrollY > 5);
     }, 0);
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
       clearTimeout(timeout);
     };
   }, [isAlwaysVisible]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (devMenuRef.current && !devMenuRef.current.contains(event.target as Node)) {
+      if (
+        devMenuRef.current &&
+        !devMenuRef.current.contains(event.target as Node)
+      ) {
         setIsDevMenuOpen(false);
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const closeMobileMenu = () => setIsMobileMenuOpen(false);
@@ -71,14 +49,28 @@ const Navbar: React.FC<NavbarProps> = ({ isAlwaysVisible = false }) => {
   const renderNavLink = (item: NavItem, isMobile = false) => {
     if (item.children) {
       return (
-        <div key={item.to} className={isMobile ? '' : 'relative'} ref={!isMobile ? devMenuRef : undefined}>
+        <div
+          key={item.to}
+          className={isMobile ? "" : "relative"}
+          ref={!isMobile ? devMenuRef : undefined}
+        >
           <button
             onClick={() => !isMobile && setIsDevMenuOpen(!isDevMenuOpen)}
             className="text-primary dark:text-primary-dark text-sm hover:text-primary/80 dark:hover:text-primary-dark/80 transition-colors duration-200 flex items-center gap-1"
           >
             {item.label}
-            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            <svg
+              className="w-3 h-3"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 9l-7 7-7-7"
+              />
             </svg>
           </button>
           <AnimatePresence>
@@ -122,8 +114,18 @@ const Navbar: React.FC<NavbarProps> = ({ isAlwaysVisible = false }) => {
         className="fixed top-4 right-4 z-50 p-2 md:hidden bg-bg dark:bg-bg-dark border border-borderMuted"
         aria-label="Open menu"
       >
-        <svg className="w-6 h-6 text-primary dark:text-primary-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+        <svg
+          className="w-6 h-6 text-primary dark:text-primary-dark"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M4 6h16M4 12h16M4 18h16"
+          />
         </svg>
       </button>
 
@@ -157,12 +159,12 @@ const Navbar: React.FC<NavbarProps> = ({ isAlwaysVisible = false }) => {
               className="fixed inset-0 z-40 bg-black/50 md:hidden"
               onClick={closeMobileMenu}
             />
-            
+
             <motion.div
-              initial={{ x: '100%' }}
+              initial={{ x: "100%" }}
               animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'tween', duration: 0.3 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "tween", duration: 0.3 }}
               className="fixed top-0 right-0 bottom-0 z-50 w-64 bg-bg dark:bg-bg-dark border-l border-borderMuted md:hidden"
             >
               <div className="flex flex-col h-full">
@@ -175,8 +177,18 @@ const Navbar: React.FC<NavbarProps> = ({ isAlwaysVisible = false }) => {
                     className="p-1 text-muted hover:text-text dark:hover:text-text-dark"
                     aria-label="Close menu"
                   >
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    <svg
+                      className="w-6 h-6"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M6 18L18 6M6 6l12 12"
+                      />
                     </svg>
                   </button>
                 </div>

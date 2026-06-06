@@ -10,7 +10,7 @@ import Blog from "./pages/Blog";
 import About from "./pages/About";
 import Playground from "./pages/Playground";
 import Footer from "./components/ui/Footer";
-import Navbar from "./components/ui/Navbar";
+import Navbar from "./components/ui/Navbar/Navbar";
 import TerminalPage from "./pages/demos/TerminalPage";
 import GitHubActivityPage from "./pages/demos/GitHubActivityPage";
 import CodePlaygroundPage from "./pages/demos/CodePlaygroundPage";
@@ -18,9 +18,9 @@ import AsciiArtPage from "./pages/demos/AsciiArtPage";
 import AchievementsPage from "./pages/demos/AchievementsPage";
 import EffectsPlayground from "./pages/demos/EffectsPlayground";
 import TerminalContextProvider from "./context/terminal/TerminalContextProvider";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom"
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 
-const AppContent = () => {
+export const AppContent = () => {
   const location = useLocation();
   const isHomePage = location.pathname === "/";
 
@@ -36,8 +36,14 @@ const AppContent = () => {
           <Route path="/about" element={<About />} />
           <Route path="/dev/playground" element={<Playground />} />
           <Route path="/demo/terminal" element={<TerminalPage />} />
-          <Route path="/demo/github-activity" element={<GitHubActivityPage />} />
-          <Route path="/demo/code-playground" element={<CodePlaygroundPage />} />
+          <Route
+            path="/demo/github-activity"
+            element={<GitHubActivityPage />}
+          />
+          <Route
+            path="/demo/code-playground"
+            element={<CodePlaygroundPage />}
+          />
           <Route path="/demo/ascii-art" element={<AsciiArtPage />} />
           <Route path="/demo/achievements" element={<AchievementsPage />} />
           <Route path="/demo/effects" element={<EffectsPlayground />} />
@@ -60,5 +66,5 @@ createRoot(rootElement).render(
         <AppContent />
       </TerminalContextProvider>
     </StrictMode>
-  </BrowserRouter>
-)
+  </BrowserRouter>,
+);
