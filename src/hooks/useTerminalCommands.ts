@@ -28,7 +28,7 @@ interface UseTerminalCommandsProps {
   state: TerminalState
 }
 
-export function useTerminalCommands({ state }: UseTerminalCommandsProps) {
+export default function useTerminalCommands({ state }: UseTerminalCommandsProps) {
   const executeCommand = useCallback((cmd: string): string | undefined => {
     const { args, flags } = parseCommandInput(cmd.trim().toLowerCase())
     const command = args[0]

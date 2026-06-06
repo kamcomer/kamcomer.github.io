@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-export function useBodyScroll(isDisabled: boolean) {
+export default function useBodyScroll(isDisabled: boolean) {
   useEffect(() => {
     if (isDisabled) {
       document.body.style.overflow = 'hidden'
