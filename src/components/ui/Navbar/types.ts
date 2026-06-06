@@ -3,7 +3,3 @@ export interface NavItem {
   label: string;
   children?: NavItem[];
 }
-
-export interface NavbarProps {
-  isAlwaysVisible?: boolean;
-}

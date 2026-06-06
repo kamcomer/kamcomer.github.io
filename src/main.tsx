@@ -18,15 +18,11 @@ import AsciiArtPage from "./pages/demos/AsciiArtPage";
 import AchievementsPage from "./pages/demos/AchievementsPage";
 import EffectsPlayground from "./pages/demos/EffectsPlayground";
 import TerminalContextProvider from "./context/terminal/TerminalContextProvider";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-export const AppContent = () => {
-  const location = useLocation();
-  const isHomePage = location.pathname === "/";
-
-  return (
+export const AppContent = () => (
     <div className="min-h-screen flex flex-col bg-bg">
-      <Navbar isAlwaysVisible={!isHomePage} />
+      <Navbar />
       <main className={`flex-1 p-3 md:p-8 md:pt-20 bg-bg dark:bg-bg2-dark`}>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -52,7 +48,6 @@ export const AppContent = () => {
       <Footer />
     </div>
   );
-};
 
 const rootElement = document.getElementById("root");
 
