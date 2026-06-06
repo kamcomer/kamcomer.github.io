@@ -416,7 +416,6 @@ const GithubProjects: React.FC<GithubProjectsProps> = ({ username }) => {
               <ReactMarkdown
                 components={{
                   code({ className, children, ...props }) {
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     const match = /language-(\w+)/.exec(className || '');
                     const code = String(children).replace(/\n$/, '');
                     const inline = !match;

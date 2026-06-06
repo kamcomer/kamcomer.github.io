@@ -8,7 +8,7 @@ import Terminal from '../components/terminal/Terminal';
 
 const Home = () => {
   return (
-    <div id="projects">
+    <div>
       <Terminal />
       <div className="max-w-6xl mx-auto divide-y divide-borderMuted dark:divide-borderMuted">
         <ExperienceTimeline />

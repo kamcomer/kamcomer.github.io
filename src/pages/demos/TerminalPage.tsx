@@ -157,8 +157,8 @@ ${PortfolioConfig.tagline}`;
           <div className="w-3 h-3 rounded-full bg-success" />
           <span className="ml-2 text-sm text-muted dark:text-muted-dark">terminal</span>
         </div>
-        
-        <div 
+
+        <div
           className="p-4 min-h-[300px] font-mono text-sm"
         >
           <div ref={outputRef} className="space-y-1 mb-2">
@@ -166,7 +166,7 @@ ${PortfolioConfig.tagline}`;
               <div key={i} className="text-text dark:text-text-dark whitespace-pre-wrap">{line}</div>
             ))}
           </div>
-          
+
           <form onSubmit={handleSubmit} className="flex items-center gap-2">
             <span className="text-primary dark:text-primary-dark">{'>'}</span>
             <input

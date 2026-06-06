@@ -19,6 +19,7 @@ type Matches = [{
 
 type Annotations = GetAnnotations<Info & { module: Module, matches: Matches }, false>;
 
+// eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace Route {
   // links
   export type LinkDescriptors = Annotations["LinkDescriptors"];

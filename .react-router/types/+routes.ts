@@ -12,7 +12,7 @@ declare module "react-router" {
 
 type Pages = {
   "/": {
-    params: {};
+    params: object;
   };
 };
 
