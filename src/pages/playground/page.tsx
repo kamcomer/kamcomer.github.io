@@ -1,7 +1,10 @@
 import { useState } from 'react';
-import Typewriter from '../components/Typewriter';
-import { TerminalPrompt, TypewriterWithDelete, StaggeredLines, InfiniteTypewriter } from '../components/TypewriterVariants';
-import { PortfolioConfig } from '../config/portfolio';
+import Typewriter from '../../components/Typewriter';
+import TerminalPrompt from './TerminalPrompt';
+import TypewriterWithDelete from './TypewriterWithDelete';
+import StaggeredLines from './StaggeredLines';
+import InfiniteTypewriter from './InfiniteTypewriter';
+import { personalInfo } from '../../config/personal';
 
 type Speed = 'slow' | 'normal' | 'fast';
 
@@ -71,7 +74,7 @@ function Playground() {
         </h2>
         <div className="p-4 bg-bg2 dark:bg-bg2-dark border border-borderMuted dark:border-borderMuted">
           <Typewriter
-            text={`Hi, I'm ${PortfolioConfig.name}`}
+            text={`Hi, I'm ${personalInfo.name}`}
             speed={speedMap[selectedSpeed]}
             cursor={selectedCursor}
             className="text-xl"
@@ -124,9 +127,9 @@ function Playground() {
         <div className="p-4 bg-bg2 dark:bg-bg2-dark border border-borderMuted dark:border-borderMuted">
           <StaggeredLines
             lines={[
-              `const developer = "${PortfolioConfig.name}";`,
+              `const developer = "${personalInfo.name}";`,
               'const skills = ["React", "Node", "TypeScript"];',
-              `const location = "${PortfolioConfig.location}";`,
+              `const location = "${personalInfo.location}";`,
               'console.log("Hello, World!");',
             ]}
             speed={speedMap[selectedSpeed]}
@@ -160,7 +163,7 @@ function Playground() {
         </h2>
         <div className="p-4 bg-bg2 dark:bg-bg2-dark border border-borderMuted dark:border-borderMuted">
           <Typewriter
-            text={`const name = "${PortfolioConfig.name}";`}
+            text={`const name = "${personalInfo.name}";`}
             speed={speedMap[selectedSpeed]}
             cursor={selectedCursor}
             className="text-lg"

@@ -8,7 +8,7 @@ import Projects from "./pages/Projects";
 import SinglePost from "./pages/SinglePost";
 import Blog from "./pages/Blog";
 import About from "./pages/About";
-import Playground from "./pages/Playground";
+import Playground from "./pages/playground/page";
 import Footer from "./components/ui/Footer";
 import Navbar from "./components/ui/Navbar/Navbar";
 import TerminalPage from "./pages/demos/TerminalPage";
