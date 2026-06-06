@@ -4,7 +4,7 @@ import GameOfLifeEffect from './procedural-effects/GameOfLifeEffect';
 import FlowFieldEffect from './procedural-effects/FlowFieldEffect';
 import LissajousEffect from './procedural-effects/LissajousEffect';
 import BoidsEffect from './procedural-effects/BoidsEffect';
-import { PortfolioConfig } from '../config/portfolio';
+import { personalInfo } from '../config/personal';
 
 type EffectKey = 'life' | 'flow' | 'lissajous' | 'boids';
 
@@ -87,14 +87,14 @@ const HeroSection = () => {
           variants={itemVariants}
           className="text-4xl md:text-5xl font-bold text-text dark:text-text-dark mb-4 tracking-tight"
         >
-          Hi, I'm {PortfolioConfig.name}
+          Hi, I'm {personalInfo.name}
         </motion.h1>
 
         <motion.p
           variants={itemVariants}
           className="text-xl md:text-2xl text-secondary dark:text-secondary-dark mb-5"
         >
-          {PortfolioConfig.title}
+          {personalInfo.title}
         </motion.p>
 
         <motion.p

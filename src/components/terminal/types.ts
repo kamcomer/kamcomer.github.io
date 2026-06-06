@@ -1,17 +1,13 @@
 import { EffectKey } from "../procedural-effects/types";
-import { PortfolioConfig } from "../../config/portfolio";
+import { BootLine, terminalConfig } from "../../config/terminal";
 
-export interface BootLine {
-  text: string;
-  delay: number;
-  type: 'info' | 'success' | 'error' | 'input';
-}
+export type { BootLine };
 
-export const bootSequence: BootLine[] = PortfolioConfig.terminal.bootMessages;
+export const bootSequence: BootLine[] = terminalConfig.bootMessages;
 
-export const asciiBanner = PortfolioConfig.terminal.asciiBanner;
+export const asciiBanner = terminalConfig.asciiBanner;
 
-export const aboutContent: string[] = PortfolioConfig.terminal.aboutContent;
+export const aboutContent: string[] = terminalConfig.aboutContent;
 
 export const defaultTerminalState: TerminalState = {
   bootLines: [],

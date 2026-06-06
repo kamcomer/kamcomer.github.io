@@ -1,8 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { PortfolioConfig, Experience } from '../config/portfolio';
-
-const experiences = PortfolioConfig.experiences;
+import { experiences, Experience } from '../config/experience';
 
 const getTypeColor = (type: Experience['type']): string => {
   switch (type) {

@@ -1,7 +1,8 @@
 import { useCallback } from 'react'
 import { TerminalState } from '../components/terminal/types'
 import { EffectKey, Effects } from '../components/procedural-effects/types'
-import { PortfolioConfig } from '../config/portfolio'
+import { personalInfo } from '../config/personal'
+import { socialLinks } from '../config/social'
 import { parseCommandInput, parseHexColor } from '../utils/commandParser'
 
 const DONUT_FLAGS = `
@@ -43,7 +44,7 @@ Options:
 
 Available commands:
   help        - Show this help message
-  about       - Learn about ${PortfolioConfig.name.split(' ')[0]}
+  about       - Learn about ${personalInfo.name.split(' ')[0]}
   projects    - View my projects
   skills      - View my skills
   contact     - Get in touch
@@ -57,7 +58,7 @@ Available commands:
         }
         return `Available commands:
   help        - Show this help message
-  about       - Learn about ${PortfolioConfig.name.split(' ')[0]}
+  about       - Learn about ${personalInfo.name.split(' ')[0]}
   projects    - View my projects
   skills      - View my skills
   contact     - Get in touch
@@ -70,10 +71,10 @@ Available commands:
   whoami      - Display current user`
 
       case 'about':
-        return `${PortfolioConfig.name} - ${PortfolioConfig.title}
-Based out of ${PortfolioConfig.location}
+        return `${personalInfo.name} - ${personalInfo.title}
+Based out of ${personalInfo.location}
 
-${PortfolioConfig.tagline}
+${personalInfo.tagline}
 `
       case 'projects':
         window.location.href = '#projects'
@@ -88,7 +89,7 @@ ${PortfolioConfig.tagline}
         return 'Navigating to contact section...'
 
       case 'github':
-        window.open(`https://github.com/${PortfolioConfig.social.github}`, '_blank')
+        window.open(`https://github.com/${socialLinks.github}`, '_blank')
         return 'Opening GitHub profile in new tab...'
 
       case 'clear':

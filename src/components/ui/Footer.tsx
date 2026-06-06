@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { PortfolioConfig } from '../../config/portfolio';
+import { personalInfo } from '../../config/personal';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -14,7 +14,7 @@ const Footer = () => {
     >
       <div className="flex flex-col md:flex-row items-center justify-between gap-2">
         <p className="text-muted dark:text-muted-dark text-sm">
-          &copy; {currentYear} {PortfolioConfig.name}. All rights reserved.
+          &copy; {currentYear} {personalInfo.name}. All rights reserved.
         </p>
         <div className="flex gap-2 text-muted dark:text-muted-dark text-sm">
           <a

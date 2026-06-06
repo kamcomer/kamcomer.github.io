@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import DonutEffect from '../../components/procedural-effects/DonutEffect';
 import CubeEffect from '../../components/procedural-effects/CubeEffect';
-import SliderInput from './EffectsPlayground/SliderInput';
+import SliderInput from './effects-playground/SliderInput';
 
 type EffectType = 'donut' | 'cube';
 

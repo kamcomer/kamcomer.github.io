@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { PortfolioConfig } from '../../config/portfolio';
+import { personalInfo } from '../../config/personal';
+import { socialLinks } from '../../config/social';
 
 const TerminalPage: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,7 +18,7 @@ const TerminalPage: React.FC = () => {
     help: () => {
       return `Available commands:
   help        - Show this help message
-  about       - Learn about ${PortfolioConfig.name.split(' ')[0]}
+  about       - Learn about ${personalInfo.name.split(' ')[0]}
   projects    - View my projects
   blog        - Read my blog
   contact     - Get in touch
@@ -27,9 +28,9 @@ const TerminalPage: React.FC = () => {
   whoami      - Display current user`;
     },
     about: () => {
-      return `${PortfolioConfig.name} - ${PortfolioConfig.title}
-Based in ${PortfolioConfig.location}
-${PortfolioConfig.tagline}`;
+      return `${personalInfo.name} - ${personalInfo.title}
+Based in ${personalInfo.location}
+${personalInfo.tagline}`;
     },
     projects: () => {
       return `Opening projects page... [redirect to /projects]`;
@@ -41,7 +42,7 @@ ${PortfolioConfig.tagline}`;
       return `Opening contact form... [redirect to /#contact]`;
     },
     github: () => {
-      window.open(`https://github.com/${PortfolioConfig.social.github}`, '_blank');
+      window.open(`https://github.com/${socialLinks.github}`, '_blank');
       return 'Opening GitHub profile in new tab...';
     },
     clear: () => {

@@ -1,6 +1,6 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { motion } from 'framer-motion';
-import { PortfolioConfig } from '../config/portfolio';
+import { socialLinks } from '../config/social';
 
 interface FormState {
   name: string;
@@ -14,10 +14,10 @@ interface SocialLink {
   icon: string;
 }
 
-const socialLinks: SocialLink[] = [
-  { label: 'GitHub', url: `https://github.com/${PortfolioConfig.social.github}`, icon: 'GH' },
-  { label: 'LinkedIn', url: `https://linkedin.com/in/${PortfolioConfig.social.linkedin}`, icon: 'LI' },
-  { label: 'Email', url: `mailto:${PortfolioConfig.social.email}`, icon: '@' },
+const links: SocialLink[] = [
+  { label: 'GitHub', url: `https://github.com/${socialLinks.github}`, icon: 'GH' },
+  { label: 'LinkedIn', url: `https://linkedin.com/in/${socialLinks.linkedin}`, icon: 'LI' },
+  { label: 'Email', url: `mailto:${socialLinks.email}`, icon: '@' },
 ];
 
 const ContactForm = () => {
@@ -47,7 +47,7 @@ const ContactForm = () => {
       <h3 className="text-2xl font-bold text-primary dark:text-primary-dark mb-6 border-l-4 border-primary dark:border-primary-dark pl-4">Contact</h3>
       
       <div className="flex justify-center gap-4 mb-8">
-        {socialLinks.map((link) => (
+        {links.map((link) => (
           <a
             key={link.label}
             href={link.url}

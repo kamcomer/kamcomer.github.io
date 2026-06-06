@@ -1,9 +1,9 @@
 import React from 'react';
-import { PortfolioConfig } from '../config/portfolio';
+import { personalInfo } from '../config/personal';
 
 const About = () => {
     return (<h1>
-        Hey, I'm {PortfolioConfig.name.split(' ')[0]}
+        Hey, I'm {personalInfo.name.split(' ')[0]}
     </h1>)
 }
 

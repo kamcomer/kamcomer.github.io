@@ -1,6 +1,6 @@
 import React, { Ref, useContext } from 'react'
 import { TerminalContext } from '../../context/terminal/TerminalContext'
-import { useTerminalCommands } from '../../hooks/useTerminalCommands'
+import useTerminalCommands from '../../hooks/useTerminalCommands'
 
 interface TerminalInputProps {
   inputRef: Ref<HTMLInputElement | null>,
