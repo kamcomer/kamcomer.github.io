@@ -1,4 +1,6 @@
 export const FEATURED_PROJECTS: string[] = [
-  'pin-and-roll',
-  'speakmate',
+  'raycaster',
+  'http-server',
+  'kvstore',
+  'fastapi-mongo-movies',
 ];
