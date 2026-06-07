@@ -1,6 +1,9 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { motion } from 'framer-motion';
 import { socialLinks } from '../config/social';
+import SectionHeading from './ui/SectionHeading';
+import FormInput from './ui/FormInput';
+import FormTextarea from './ui/FormTextarea';
 
 interface FormState {
   name: string;
@@ -44,7 +47,7 @@ const ContactForm = () => {
       transition={{ duration: 0.5 }}
       className="bg-bg2 dark:bg-bg2-dark border border-borderMuted dark:border-borderMuted p-6"
     >
-      <h3 className="text-2xl font-bold text-primary dark:text-primary-dark mb-6 border-l-4 border-primary dark:border-primary-dark pl-4">Contact</h3>
+      <SectionHeading size="md" className="mb-6">Contact</SectionHeading>
       
       <div className="flex justify-center gap-4 mb-8">
         {links.map((link) => (
@@ -62,53 +65,9 @@ const ContactForm = () => {
       </div>
 
       <form onSubmit={handleSubmit} className="max-w-lg mx-auto">
-        <div className="mb-4">
-          <label htmlFor="name" className="block text-muted dark:text-muted-dark text-sm mb-2">
-            Name
-          </label>
-          <motion.input
-            whileFocus={{ scale: 1.01 }}
-            type="text"
-            id="name"
-            name="name"
-            value={form.name}
-            onChange={handleChange}
-            required
-            className="w-full px-4 py-3 bg-bg dark:bg-bg-dark text-text dark:text-text-dark border border-borderMuted dark:border-borderMuted focus:outline-none focus:border-primary dark:focus:border-primary transition-colors"
-          />
-        </div>
-        
-        <div className="mb-4">
-          <label htmlFor="email" className="block text-muted dark:text-muted-dark text-sm mb-2">
-            Email
-          </label>
-          <motion.input
-            whileFocus={{ scale: 1.01 }}
-            type="email"
-            id="email"
-            name="email"
-            value={form.email}
-            onChange={handleChange}
-            required
-            className="w-full px-4 py-3 bg-bg dark:bg-bg-dark text-text dark:text-text-dark border border-borderMuted dark:border-borderMuted focus:outline-none focus:border-primary dark:focus:border-primary transition-colors"
-          />
-        </div>
-        
-        <div className="mb-6">
-          <label htmlFor="message" className="block text-muted dark:text-muted-dark text-sm mb-2">
-            Message
-          </label>
-          <motion.textarea
-            whileFocus={{ scale: 1.01 }}
-            id="message"
-            name="message"
-            value={form.message}
-            onChange={handleChange}
-            required
-            rows={4}
-            className="w-full px-4 py-3 bg-bg dark:bg-bg-dark text-text dark:text-text-dark border border-borderMuted dark:border-borderMuted focus:outline-none focus:border-primary dark:focus:border-primary transition-colors resize-none"
-          />
-        </div>
+        <FormInput label="Name" name="name" value={form.name} onChange={handleChange} required />
+        <FormInput label="Email" name="email" type="email" value={form.email} onChange={handleChange} required />
+        <FormTextarea label="Message" name="message" value={form.message} onChange={handleChange} required />
         
         <motion.button
           whileHover={{ scale: 1.02 }}
