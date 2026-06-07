@@ -7,7 +7,7 @@ import Home from "./pages/Home";
 import Projects from "./pages/Projects";
 import SinglePost from "./pages/SinglePost";
 import Blog from "./pages/Blog";
-import About from "./pages/About";
+
 import Playground from "./pages/playground/page";
 import Footer from "./components/ui/Footer";
 import Navbar from "./components/ui/Navbar/Navbar";
@@ -29,7 +29,7 @@ export const AppContent = () => (
           <Route path="/projects" element={<Projects />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<SinglePost />} />
-          <Route path="/about" element={<About />} />
+
           <Route path="/dev/playground" element={<Playground />} />
           <Route path="/demo/terminal" element={<TerminalPage />} />
           <Route

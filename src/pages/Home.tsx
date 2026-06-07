@@ -1,4 +1,5 @@
 import React from 'react';
+import AboutSection from '../components/About';
 import Skills from '../components/Skills';
 import ContactForm from '../components/ContactForm';
 import FeaturedProjects from '../components/FeaturedProjects';
@@ -10,14 +11,21 @@ const Home = () => {
     <div>
       <Terminal />
       <div className="max-w-6xl mx-auto divide-y divide-borderMuted dark:divide-borderMuted">
-        <ExperienceTimeline />
-        <FeaturedProjects />
-        <div id="skills" className="py-12">
+        <section id="about" className="py-12 scroll-mt-20">
+          <AboutSection />
+        </section>
+        <section id="experience" className="py-12">
+          <ExperienceTimeline />
+        </section>
+        <section id="projects" className="py-12">
+          <FeaturedProjects />
+        </section>
+        <section id="skills" className="py-12">
           <Skills />
-        </div>
-        <div id="contact" className="py-12">
+        </section>
+        <section id="contact" className="py-12">
           <ContactForm />
-        </div>
+        </section>
       </div>
     </div>
   );

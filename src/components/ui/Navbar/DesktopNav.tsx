@@ -4,6 +4,15 @@ import { motion, AnimatePresence } from 'framer-motion';
 import ThemeToggle from '../ThemeToggle';
 import { navLinks } from './navbarConfig';
 
+const isHashLink = (to: string) => to.startsWith('/#');
+
+const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+
+const scrollToHash = (to: string) => {
+  const id = to.slice(2);
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+};
+
 const DesktopNav: React.FC = () => {
   const location = useLocation();
   const isHomePage = location.pathname === '/';
@@ -91,10 +100,26 @@ const DesktopNav: React.FC = () => {
                   </div>
                 );
               }
+              if (isHashLink(item.to)) {
+                return (
+                  <a
+                    key={item.to}
+                    href={item.to}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      scrollToHash(item.to);
+                    }}
+                    className="text-primary dark:text-primary-dark text-sm hover:text-primary/80 dark:hover:text-primary-dark/80 transition-colors duration-200"
+                  >
+                    {item.label}
+                  </a>
+                );
+              }
               return (
                 <Link
                   key={item.to}
                   to={item.to}
+                  onClick={item.to === '/' ? scrollToTop : undefined}
                   className="text-primary dark:text-primary-dark text-sm hover:text-primary/80 dark:hover:text-primary-dark/80 transition-colors duration-200"
                 >
                   {item.label}

@@ -1,10 +1,16 @@
 import React from 'react';
 import { personalInfo } from '../config/personal';
+import SectionHeading from './ui/SectionHeading';
 
-const About = () => {
-    return (<h1>
-        Hey, I'm {personalInfo.name.split(' ')[0]}
-    </h1>)
-}
+const AboutSection = () => {
+  return (
+    <>
+      <SectionHeading className="mb-6">About Me</SectionHeading>
+      <p className="text-muted dark:text-muted-dark text-lg leading-relaxed whitespace-pre-line">
+        {personalInfo.bio}
+      </p>
+    </>
+  );
+};
 
-export default About;
+export default AboutSection;

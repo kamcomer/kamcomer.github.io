@@ -4,6 +4,15 @@ import { motion, AnimatePresence } from 'framer-motion';
 import ThemeToggle from '../ThemeToggle';
 import { navLinks } from './navbarConfig';
 
+const isHashLink = (to: string) => to.startsWith('/#');
+
+const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+
+const scrollToHash = (to: string) => {
+  const id = to.slice(2);
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+};
+
 const MobileNav: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const closeMobileMenu = () => setIsMobileMenuOpen(false);
@@ -73,10 +82,25 @@ const MobileNav: React.FC = () => {
                             </Link>
                           ))}
                         </>
+                      ) : isHashLink(item.to) ? (
+                        <a
+                          href={item.to}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            closeMobileMenu();
+                            scrollToHash(item.to);
+                          }}
+                          className="block px-4 py-3 text-primary dark:text-primary-dark hover:bg-bg2 dark:hover:bg-bg2-dark transition-colors"
+                        >
+                          {item.label}
+                        </a>
                       ) : (
                         <Link
                           to={item.to}
-                          onClick={closeMobileMenu}
+                          onClick={() => {
+                            closeMobileMenu();
+                            if (item.to === '/') scrollToTop();
+                          }}
                           className="block px-4 py-3 text-primary dark:text-primary-dark hover:bg-bg2 dark:hover:bg-bg2-dark transition-colors"
                         >
                           {item.label}

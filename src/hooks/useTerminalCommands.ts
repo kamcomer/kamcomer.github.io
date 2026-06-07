@@ -44,7 +44,8 @@ Options:
 
 Available commands:
   help        - Show this help message
-  about       - Learn about ${personalInfo.name.split(' ')[0]}
+  about       - About me
+  experience  - Experience & work history
   projects    - View my projects
   skills      - View my skills
   contact     - Get in touch
@@ -58,7 +59,8 @@ Available commands:
         }
         return `Available commands:
   help        - Show this help message
-  about       - Learn about ${personalInfo.name.split(' ')[0]}
+  about       - About me
+  experience  - Experience & work history
   projects    - View my projects
   skills      - View my skills
   contact     - Get in touch
@@ -71,11 +73,13 @@ Available commands:
   whoami      - Display current user`
 
       case 'about':
-        return `${personalInfo.name} - ${personalInfo.title}
-Based out of ${personalInfo.location}
+        window.location.href = '#about'
+        return 'Navigating to about section...'
 
-${personalInfo.tagline}
-`
+      case 'experience':
+        window.location.href = '#experience'
+        return 'Navigating to experience section...'
+
       case 'projects':
         window.location.href = '#projects'
         return 'Navigating to projects section...'
