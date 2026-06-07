@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import SectionHeading from '../../components/ui/SectionHeading';
 
 interface ActivityEvent {
   id: number;
@@ -102,7 +103,7 @@ const GitHubActivityPage: React.FC = () => {
     <div className="max-w-4xl mx-auto py-12">
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-primary dark:text-primary-dark mb-2">Live GitHub Activity</h1>
+          <SectionHeading accent={false} className="mb-2">Live GitHub Activity</SectionHeading>
           <p className="text-muted dark:text-muted-dark">
             Real-time feed of my GitHub activity
           </p>

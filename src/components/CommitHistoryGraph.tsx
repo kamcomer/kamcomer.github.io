@@ -1,4 +1,6 @@
 import { useGithubCommits } from '../hooks';
+import SectionHeading from './ui/SectionHeading';
+import StateMessage from './ui/StateMessage';
 
 interface CommitHistoryGraphProps {
   username?: string;
@@ -15,22 +17,14 @@ const getColor = (count: number): string => {
 const CommitHistoryGraph: React.FC<CommitHistoryGraphProps> = ({ username }) => {
   const { commits, loading, error, year, setYear, availableYears } = useGithubCommits({ username });
 
-  if (loading) return (
-    <div className="text-center py-12 text-muted dark:text-muted-dark">
-      Loading commit history...
-    </div>
-  );
+  if (loading) return <StateMessage variant="loading">Loading commit history...</StateMessage>;
 
-  if (error) return (
-    <div className="text-center py-12 text-danger dark:text-danger">
-      {error}
-    </div>
-  );
+  if (error) return <StateMessage variant="error">{error}</StateMessage>;
 
   return (
     <section className="py-12">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl font-bold text-primary dark:text-primary-dark mb-6 text-left border-l-4 border-primary dark:border-primary-dark pl-4">Commit History ({year})</h2>
+        <SectionHeading className="mb-6">Commit History ({year})</SectionHeading>
 
         <div className="mb-6">
           <label htmlFor="year-select" className="text-muted dark:text-muted-dark mr-2 text-sm">Year:</label>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import SectionHeading from './ui/SectionHeading';
 
 interface SkillCategory {
   name: string;
@@ -45,7 +46,7 @@ const Skills = () => {
       variants={containerVariants}
       className="bg-bg2 dark:bg-bg2-dark border border-borderMuted dark:border-borderMuted p-6"
     >
-      <h3 className="text-2xl font-bold text-primary dark:text-primary-dark mb-6 border-l-4 border-primary dark:border-primary-dark pl-4">Skills</h3>
+      <SectionHeading size="md" className="mb-6">Skills</SectionHeading>
       
       <div className="grid md:grid-cols-3 gap-6">
         {skillCategories.map((category) => (
