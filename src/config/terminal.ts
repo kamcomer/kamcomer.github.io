@@ -6,7 +6,7 @@ export interface BootLine {
   type: BootLineType;
 }
 
-export interface TerminalConfig {
+interface TerminalConfig {
   bootMessages: BootLine[];
   asciiBanner: string;
   aboutContent: string[];
