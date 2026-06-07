@@ -1,26 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { skillCategories } from '../config/skills';
 import SectionHeading from './ui/SectionHeading';
-
-interface SkillCategory {
-  name: string;
-  skills: string[];
-}
-
-const skillCategories: SkillCategory[] = [
-  {
-    name: 'Frontend',
-    skills: ['React', 'TypeScript', 'JavaScript', 'HTML', 'CSS', 'Tailwind'],
-  },
-  {
-    name: 'Backend',
-    skills: ['Node.js', 'Express', 'PostgreSQL', 'REST APIs', 'GraphQL'],
-  },
-  {
-    name: 'Tools & DevOps',
-    skills: ['Git', 'Docker', 'AWS', 'Linux', 'Vite', 'CI/CD'],
-  },
-];
 
 const containerVariants = {
   hidden: { opacity: 0 },
