@@ -1,24 +1,37 @@
-import React, { useEffect, useState } from 'react';
-import { fetchGithubRepos } from '../services/github';
-import { GithubRepo } from '../types';
+import React from 'react';
+import { useGithubRepos } from '../hooks';
+import SectionHeading from '../components/ui/SectionHeading';
+import StateMessage from '../components/ui/StateMessage';
 import ProjectCard from '../components/ProjectCard';
 
 const Projects = () => {
-  const [repos, setRepos] = useState<GithubRepo[]>([]);
-  const githubUsername = 'syntaxDuck';
+  const { repos, loading, error } = useGithubRepos();
 
-  useEffect(() => {
-    const getRepos = async () => {
-      const data = await fetchGithubRepos(githubUsername);
-      setRepos(data.repos);
-    };
-    getRepos();
-  }, []);
+  if (loading) return (
+    <div className="max-w-6xl mx-auto py-8">
+      <SectionHeading className="mb-8">My GitHub Projects</SectionHeading>
+      <StateMessage variant="loading">Loading GitHub projects...</StateMessage>
+    </div>
+  );
+
+  if (error) return (
+    <div className="max-w-6xl mx-auto py-8">
+      <SectionHeading className="mb-8">My GitHub Projects</SectionHeading>
+      <StateMessage variant="error">{error}</StateMessage>
+    </div>
+  );
+
+  if (repos.length === 0) return (
+    <div className="max-w-6xl mx-auto py-8">
+      <SectionHeading className="mb-8">My GitHub Projects</SectionHeading>
+      <p className="text-center py-12 text-muted dark:text-muted-dark">No projects found.</p>
+    </div>
+  );
 
   return (
     <div className="max-w-6xl mx-auto py-8">
-      <h2 className="text-3xl font-bold text-primary dark:text-primary-dark mb-8 border-l-4 border-primary dark:border-primary-dark pl-4">My GitHub Projects</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 divide-y divide-borderMuted dark:divide-borderMuted">
+      <SectionHeading className="mb-8">My GitHub Projects</SectionHeading>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {repos.map((repo) => (
           <ProjectCard key={repo.id} project={repo} />
         ))}
