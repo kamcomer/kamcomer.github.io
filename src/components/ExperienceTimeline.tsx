@@ -1,6 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { experiences, Experience } from '../config/experience';
+import SectionHeading from './ui/SectionHeading';
+import Tag from './ui/Tag';
 
 const getTypeColor = (type: Experience['type']): string => {
   switch (type) {
@@ -22,9 +24,9 @@ const getTypeLabel = (type: Experience['type']): string => {
 const ExperienceTimeline: React.FC = () => {
   return (
     <section className="py-12">
-      <h2 className="text-2xl md:text-3xl font-bold text-primary dark:text-primary-dark mb-8 border-l-4 border-primary dark:border-primary-dark pl-4">
+      <SectionHeading size="md" className="md:text-3xl mb-8">
         Experience
-      </h2>
+      </SectionHeading>
 
       <div className="relative">
         <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-borderMuted dark:bg-borderMuted md:-translate-x-px" />
@@ -66,18 +68,13 @@ const ExperienceTimeline: React.FC = () => {
                     {exp.description}
                   </p>
                   
-                  {exp.technologies && (
-                    <div className="flex flex-wrap gap-2">
-                      {exp.technologies.map((tech) => (
-                        <span
-                          key={tech}
-                          className="text-xs px-2 py-0.5 bg-bg dark:bg-bg-dark border border-borderMuted dark:border-borderMuted text-muted dark:text-muted-dark font-mono"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  )}
+                    {exp.technologies && (
+                      <div className="flex flex-wrap gap-2">
+                        {exp.technologies.map((tech) => (
+                          <Tag key={tech}>{tech}</Tag>
+                        ))}
+                      </div>
+                    )}
                 </div>
               </div>
             </motion.div>
