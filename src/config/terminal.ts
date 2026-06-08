@@ -1,6 +1,6 @@
-export type BootLineType = "info" | "success" | "error" | "input";
+type BootLineType = "info" | "success" | "error" | "input";
 
-export interface BootLine {
+interface BootLine {
   text: string;
   delay: number;
   type: BootLineType;
@@ -11,6 +11,8 @@ interface TerminalConfig {
   asciiBanner: string;
   aboutContent: string[];
 }
+
+export type { BootLineType, BootLine };
 
 export const terminalConfig: TerminalConfig = {
   bootMessages: [

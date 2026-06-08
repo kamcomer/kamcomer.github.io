@@ -1,23 +1,31 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { experiences, Experience } from '../../config/experience';
-import SectionHeading from '../ui/SectionHeading';
-import Tag from '../ui/Tag';
+import React from "react";
+import { motion } from "framer-motion";
+import { experiences } from "../../config/experience";
+import { Experience } from "../../types";
+import SectionHeading from "../ui/SectionHeading";
+import Tag from "../ui/Tag";
 
-const getTypeColor = (type: Experience['type']): string => {
+const getTypeColor = (type: Experience["type"]): string => {
   switch (type) {
-    case 'work': return 'border-primary dark:border-primary-dark';
-    case 'education': return 'border-secondary dark:border-secondary-dark';
-    case 'project': return 'border-success dark:border-success-dark';
-    default: return 'border-primary dark:border-primary-dark';
+    case "work":
+      return "border-primary dark:border-primary-dark";
+    case "education":
+      return "border-secondary dark:border-secondary-dark";
+    case "project":
+      return "border-success dark:border-success-dark";
+    default:
+      return "border-primary dark:border-primary-dark";
   }
 };
 
-const getTypeLabel = (type: Experience['type']): string => {
+const getTypeLabel = (type: Experience["type"]): string => {
   switch (type) {
-    case 'work': return 'Work';
-    case 'education': return 'Education';
-    case 'project': return 'Project';
+    case "work":
+      return "Work";
+    case "education":
+      return "Education";
+    case "project":
+      return "Project";
   }
 };
 
@@ -40,15 +48,19 @@ const ExperienceTimeline: React.FC = () => {
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
               className={`relative flex flex-col md:flex-row ${
-                index % 2 === 0 ? 'md:flex-row-reverse' : ''
+                index % 2 === 0 ? "md:flex-row-reverse" : ""
               }`}
             >
               <div className="absolute left-4 md:left-1/2 w-3 h-3 bg-bg2 dark:bg-bg2-dark border-2 border-primary dark:border-primary-dark -translate-x-1/2 z-10" />
 
-              <div className={`ml-12 md:ml-0 md:w-[calc(50%-2rem)] ${
-                index % 2 === 0 ? 'md:mr-auto' : 'md:ml-auto'
-              }`}>
-                <div className={`bg-bg2 dark:bg-bg2-dark border-l-4 ${getTypeColor(exp.type)} p-4`}>
+              <div
+                className={`ml-12 md:ml-0 md:w-[calc(50%-2rem)] ${
+                  index % 2 === 0 ? "md:mr-auto" : "md:ml-auto"
+                }`}
+              >
+                <div
+                  className={`bg-bg2 dark:bg-bg2-dark border-l-4 ${getTypeColor(exp.type)} p-4`}
+                >
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-xs uppercase tracking-wider text-muted dark:text-muted-dark">
                       {getTypeLabel(exp.type)}
@@ -67,14 +79,14 @@ const ExperienceTimeline: React.FC = () => {
                   <p className="text-sm text-muted dark:text-muted-dark mb-3">
                     {exp.description}
                   </p>
-                  
-                    {exp.technologies && (
-                      <div className="flex flex-wrap gap-2">
-                        {exp.technologies.map((tech) => (
-                          <Tag key={tech}>{tech}</Tag>
-                        ))}
-                      </div>
-                    )}
+
+                  {exp.technologies && (
+                    <div className="flex flex-wrap gap-2">
+                      {exp.technologies.map((tech) => (
+                        <Tag key={tech}>{tech}</Tag>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
             </motion.div>

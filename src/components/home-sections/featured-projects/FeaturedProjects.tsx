@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useGithubRepos } from "../../../hooks";
-import { FEATURED_PROJECTS } from "../../../config/projects";
+import { FEATURED_PROJECTS } from "../../../config/featured-projects";
 import SectionHeading from "../../ui/SectionHeading";
 import StateMessage from "../../ui/StateMessage";
 import FeaturedProjectCard from "./FeaturedProjectCard";

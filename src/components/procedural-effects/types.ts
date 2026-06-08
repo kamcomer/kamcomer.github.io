@@ -4,10 +4,9 @@ import LissajousEffect from "./LissajousEffect";
 import BoidsEffect from "./BoidsEffect";
 import DonutEffect, { DonutConfig } from "./DonutEffect";
 import CubeEffect, { CubeConfig } from "./CubeEffect";
+import { EffectKey } from "../../types";
 
 export type EffectConfig = DonutConfig | CubeConfig;
-
-export type EffectKey = 'life' | 'flow' | 'lissajous' | 'boids' | 'donut' | 'cube';
 export const Effects: Record<EffectKey, { label: string; component: React.FC<{ className?: string; style?: React.CSSProperties } & Partial<EffectConfig>>; config?: Partial<EffectConfig> }> = {
   life: { label: 'Game of Life', component: GameOfLifeEffect },
   flow: { label: 'Flow Field', component: FlowFieldEffect },

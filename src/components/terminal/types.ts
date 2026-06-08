@@ -1,5 +1,5 @@
-import { EffectKey } from "../procedural-effects/types";
-import { BootLine, terminalConfig } from "../../config/terminal";
+import { EffectKey } from "../../types";
+import { BootLine, BootLineType, terminalConfig } from "../../config/terminal";
 
 export type { BootLine };
 
@@ -35,8 +35,6 @@ export const defaultTerminalState: TerminalState = {
   setEffectConfig: () => { },
   rebootTerminal: () => { },
 }
-
-export type BootLineType = 'info' | 'success' | 'error' | 'input';
 
 export function getLineColor(type: BootLineType): string {
   switch (type) {

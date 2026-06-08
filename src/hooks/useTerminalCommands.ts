@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 import { TerminalState } from '../components/terminal/types'
-import { EffectKey, Effects } from '../components/procedural-effects/types'
-import { personalInfo } from '../config/personal'
+import { EffectKey } from '../types'
+import { Effects } from '../components/procedural-effects/types'
 import { socialLinks } from '../config/social'
 import { parseCommandInput, parseHexColor } from '../utils/commandParser'
 

@@ -1,4 +1,4 @@
-import { NavItem } from "./types";
+import { NavItem } from "../../../types";
 
 const navLinks: NavItem[] = [
   { to: "/", label: "Home" },

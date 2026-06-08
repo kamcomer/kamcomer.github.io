@@ -1,14 +1,4 @@
-export type ExperienceType = 'work' | 'education' | 'project';
-
-export interface Experience {
-  id: string;
-  title: string;
-  company: string;
-  period: string;
-  description: string;
-  type: ExperienceType;
-  technologies?: string[];
-}
+import { Experience } from '../types';
 
 export const experiences: Experience[] = [
   {

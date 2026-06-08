@@ -1,7 +1,11 @@
 import axios from 'axios';
-import { type CommitWeek, type GithubRepo, type GithubReposResponse } from '../types';
+import { type CommitWeek, type GithubRepo } from '../types';
 
 const GITHUB_API_BASE_URL = "https://api.github.com";
+
+interface GithubReposResponse {
+  repos: GithubRepo[];
+}
 
 const getGithubToken = (): string | undefined => {
   return import.meta.env.VITE_GITHUB_TOKEN;

@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
-import { EffectKey, selectRandomEffect } from '../../components/procedural-effects/types'
+import { EffectKey } from '../../types'
+import { selectRandomEffect } from '../../components/procedural-effects/types'
 import { BootLine, bootSequence, defaultTerminalState, TerminalState, aboutContent } from '../../components/terminal/types'
 import { TerminalContext } from './TerminalContext'
 

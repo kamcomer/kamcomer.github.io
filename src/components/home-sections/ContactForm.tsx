@@ -17,6 +17,7 @@ interface SocialLink {
   icon: string;
 }
 
+
 const links: SocialLink[] = [
   {
     label: "GitHub",

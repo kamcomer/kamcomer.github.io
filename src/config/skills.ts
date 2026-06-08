@@ -1,4 +1,4 @@
-export interface SkillCategory {
+interface SkillCategory {
   name: string;
   skills: string[];
 }
