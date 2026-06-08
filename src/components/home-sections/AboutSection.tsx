@@ -1,6 +1,6 @@
 import React from 'react';
-import { personalInfo } from '../config/personal';
-import SectionHeading from './ui/SectionHeading';
+import { personalInfo } from '../../config/personal';
+import SectionHeading from '../ui/SectionHeading';
 
 const AboutSection = () => {
   return (

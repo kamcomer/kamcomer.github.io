@@ -1,6 +1,6 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { GithubRepo } from '../types';
+import React from "react";
+import { motion } from "framer-motion";
+import { GithubRepo } from "../../types";
 
 interface ProjectCardProps {
   project: GithubRepo;
@@ -22,7 +22,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
           {project.name}
         </a>
       </h3>
-      <p className="text-muted dark:text-muted-dark text-sm mb-4">{project.description}</p>
+      <p className="text-muted dark:text-muted-dark text-sm mb-4">
+        {project.description}
+      </p>
       <div className="flex gap-4 text-sm text-primary dark:text-primary-dark">
         <span>★ {project.stargazers_count}</span>
         <span>Forks: {project.forks_count}</span>

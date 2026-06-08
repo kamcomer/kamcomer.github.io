@@ -1,10 +1,10 @@
-import React from 'react';
-import AboutSection from '../components/About';
-import Skills from '../components/Skills';
-import ContactForm from '../components/ContactForm';
-import FeaturedProjects from '../components/FeaturedProjects';
-import ExperienceTimeline from '../components/ExperienceTimeline';
-import Terminal from '../components/terminal/Terminal';
+import React from "react";
+import AboutSection from "../components/home-sections/AboutSection";
+import Skills from "../components/home-sections/Skills";
+import ContactForm from "../components/home-sections/ContactForm";
+import FeaturedProjects from "../components/home-sections/featured-projects/FeaturedProjects";
+import ExperienceTimeline from "../components/home-sections/ExperienceTimeline";
+import Terminal from "../components/terminal/Terminal";
 
 const Home = () => {
   return (

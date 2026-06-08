@@ -1,5 +1,5 @@
 import React from 'react';
-import BlogPostCard from '../components/BlogPostCard';
+import BlogPostCard from '../components/blog/BlogPostCard';
 import SectionHeading from '../components/ui/SectionHeading';
 import { getAllPosts } from '../lib/posts';
 

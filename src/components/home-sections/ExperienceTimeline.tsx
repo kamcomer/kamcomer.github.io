@@ -1,8 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { experiences, Experience } from '../config/experience';
-import SectionHeading from './ui/SectionHeading';
-import Tag from './ui/Tag';
+import { experiences, Experience } from '../../config/experience';
+import SectionHeading from '../ui/SectionHeading';
+import Tag from '../ui/Tag';
 
 const getTypeColor = (type: Experience['type']): string => {
   switch (type) {

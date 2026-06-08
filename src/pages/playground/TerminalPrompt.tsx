@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import Typewriter from '../../components/Typewriter';
+import { useEffect, useState } from "react";
+import Typewriter from "./Typewriter";
 
 interface TerminalPromptProps {
   lines: string[];
@@ -12,7 +12,7 @@ function TerminalPrompt({
   lines,
   speed = 50,
   delayBetween = 300,
-  className = '',
+  className = "",
 }: TerminalPromptProps) {
   const [currentLine, setCurrentLine] = useState(0);
   const [showCursor, setShowCursor] = useState(true);
@@ -53,7 +53,7 @@ function TerminalPrompt({
                   {line}
                   {index === currentLine && (
                     <span className="animate-pulse">
-                      {showCursor ? '█' : ' '}
+                      {showCursor ? "█" : " "}
                     </span>
                   )}
                 </span>

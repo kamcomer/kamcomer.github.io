@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { GithubRepo } from '../types';
-import Tag from './ui/Tag';
+import { GithubRepo } from '../../../types';
+import Tag from '../../ui/Tag';
 
 interface FeaturedProjectCardProps {
   repo: GithubRepo;

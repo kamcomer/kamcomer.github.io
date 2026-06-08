@@ -1,7 +1,7 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { skillCategories } from '../config/skills';
-import SectionHeading from './ui/SectionHeading';
+import React from "react";
+import { motion } from "framer-motion";
+import { skillCategories } from "../../config/skills";
+import SectionHeading from "../ui/SectionHeading";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -27,8 +27,10 @@ const Skills = () => {
       variants={containerVariants}
       className="bg-bg2 dark:bg-bg2-dark border border-borderMuted dark:border-borderMuted p-6"
     >
-      <SectionHeading size="md" className="mb-6">Skills</SectionHeading>
-      
+      <SectionHeading size="md" className="mb-6">
+        Skills
+      </SectionHeading>
+
       <div className="grid md:grid-cols-3 gap-6">
         {skillCategories.map((category) => (
           <div key={category.name}>

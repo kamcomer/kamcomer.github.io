@@ -1,12 +1,12 @@
-import { useState } from 'react';
-import Typewriter from '../../components/Typewriter';
-import TerminalPrompt from './TerminalPrompt';
-import TypewriterWithDelete from './TypewriterWithDelete';
-import StaggeredLines from './StaggeredLines';
-import InfiniteTypewriter from './InfiniteTypewriter';
-import { personalInfo } from '../../config/personal';
+import { useState } from "react";
+import Typewriter from "./Typewriter";
+import TerminalPrompt from "./TerminalPrompt";
+import TypewriterWithDelete from "./TypewriterWithDelete";
+import StaggeredLines from "./StaggeredLines";
+import InfiniteTypewriter from "./InfiniteTypewriter";
+import { personalInfo } from "../../config/personal";
 
-type Speed = 'slow' | 'normal' | 'fast';
+type Speed = "slow" | "normal" | "fast";
 
 const speedMap = {
   slow: 100,
@@ -15,8 +15,10 @@ const speedMap = {
 };
 
 function Playground() {
-  const [selectedSpeed, setSelectedSpeed] = useState<Speed>('normal');
-  const [selectedCursor, setSelectedCursor] = useState<'block' | 'underscore'>('block');
+  const [selectedSpeed, setSelectedSpeed] = useState<Speed>("normal");
+  const [selectedCursor, setSelectedCursor] = useState<"block" | "underscore">(
+    "block",
+  );
 
   return (
     <div className="max-w-4xl mx-auto py-8 px-4">
@@ -31,14 +33,14 @@ function Playground() {
           <div>
             <span className="block text-sm mb-2">Speed:</span>
             <div className="flex gap-2">
-              {(['slow', 'normal', 'fast'] as Speed[]).map((speed) => (
+              {(["slow", "normal", "fast"] as Speed[]).map((speed) => (
                 <button
                   key={speed}
                   onClick={() => setSelectedSpeed(speed)}
                   className={`px-3 py-1 text-sm border ${
                     selectedSpeed === speed
-                      ? 'border-primary dark:border-primary-dark bg-primary/10 dark:bg-primary-dark/10'
-                      : 'border-borderMuted dark:border-borderMuted'
+                      ? "border-primary dark:border-primary-dark bg-primary/10 dark:bg-primary-dark/10"
+                      : "border-borderMuted dark:border-borderMuted"
                   }`}
                 >
                   {speed.charAt(0).toUpperCase() + speed.slice(1)}
@@ -49,17 +51,17 @@ function Playground() {
           <div>
             <span className="block text-sm mb-2">Cursor:</span>
             <div className="flex gap-2">
-              {(['block', 'underscore'] as const).map((cursor) => (
+              {(["block", "underscore"] as const).map((cursor) => (
                 <button
                   key={cursor}
                   onClick={() => setSelectedCursor(cursor)}
                   className={`px-3 py-1 text-sm border ${
                     selectedCursor === cursor
-                      ? 'border-primary dark:border-primary-dark bg-primary/10 dark:bg-primary-dark/10'
-                      : 'border-borderMuted dark:border-borderMuted'
+                      ? "border-primary dark:border-primary-dark bg-primary/10 dark:bg-primary-dark/10"
+                      : "border-borderMuted dark:border-borderMuted"
                   }`}
                 >
-                  {cursor === 'block' ? '█' : '_'}
+                  {cursor === "block" ? "█" : "_"}
                 </button>
               ))}
             </div>
@@ -90,10 +92,10 @@ function Playground() {
         <div className="p-4 bg-bg2 dark:bg-bg2-dark border border-borderMuted dark:border-borderMuted">
           <TerminalPrompt
             lines={[
-              'Initializing...',
-              'Loading modules...',
-              'Connecting to database...',
-              'System ready.',
+              "Initializing...",
+              "Loading modules...",
+              "Connecting to database...",
+              "System ready.",
             ]}
             speed={speedMap[selectedSpeed]}
           />
@@ -108,10 +110,10 @@ function Playground() {
         <div className="p-4 bg-bg2 dark:bg-bg2-dark border border-borderMuted dark:border-borderMuted">
           <TypewriterWithDelete
             variations={[
-              'Building awesome...',
-              'Creating amazing...',
-              'Developing cool...',
-              'Coding fantastic...',
+              "Building awesome...",
+              "Creating amazing...",
+              "Developing cool...",
+              "Coding fantastic...",
             ]}
             speed={speedMap[selectedSpeed]}
             pauseDuration={1500}
@@ -145,10 +147,10 @@ function Playground() {
         <div className="p-4 bg-bg2 dark:bg-bg2-dark border border-borderMuted dark:border-borderMuted">
           <InfiniteTypewriter
             texts={[
-              'Welcome to my portfolio',
-              'Check out my projects',
-              'Read my blog posts',
-              'Get in touch',
+              "Welcome to my portfolio",
+              "Check out my projects",
+              "Read my blog posts",
+              "Get in touch",
             ]}
             speed={speedMap[selectedSpeed]}
             pauseDuration={2000}
@@ -178,15 +180,25 @@ function Playground() {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="p-4 bg-bg2 dark:bg-bg2-dark border border-borderMuted dark:border-borderMuted">
-            <span className="text-sm text-muted dark:text-muted-dark mb-2 block">Slow (100ms)</span>
-            <Typewriter text="Fast typist" speed={100} cursor={selectedCursor} />
+            <span className="text-sm text-muted dark:text-muted-dark mb-2 block">
+              Slow (100ms)
+            </span>
+            <Typewriter
+              text="Fast typist"
+              speed={100}
+              cursor={selectedCursor}
+            />
           </div>
           <div className="p-4 bg-bg2 dark:bg-bg2-dark border border-borderMuted dark:border-borderMuted">
-            <span className="text-sm text-muted dark:text-muted-dark mb-2 block">Normal (50ms)</span>
+            <span className="text-sm text-muted dark:text-muted-dark mb-2 block">
+              Normal (50ms)
+            </span>
             <Typewriter text="Fast typist" speed={50} cursor={selectedCursor} />
           </div>
           <div className="p-4 bg-bg2 dark:bg-bg2-dark border border-borderMuted dark:border-borderMuted">
-            <span className="text-sm text-muted dark:text-muted-dark mb-2 block">Fast (20ms)</span>
+            <span className="text-sm text-muted dark:text-muted-dark mb-2 block">
+              Fast (20ms)
+            </span>
             <Typewriter text="Fast typist" speed={20} cursor={selectedCursor} />
           </div>
         </div>
