@@ -1,31 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useGithubRepos } from "../../../hooks";
-import { FEATURED_PROJECTS } from "../../../config/featured-projects";
 import SectionHeading from "../../ui/SectionHeading";
-import StateMessage from "../../ui/StateMessage";
 import FeaturedProjectCard from "./FeaturedProjectCard";
+import { featuredProjects } from "../../../config";
 
 interface FeaturedProjectsProps {
   username?: string;
 }
 
 function FeaturedProjects({ username }: FeaturedProjectsProps) {
-  const { repos, loading, error } = useGithubRepos({ username });
-
-  if (loading)
-    return (
-      <StateMessage variant="loading">
-        Loading featured projects...
-      </StateMessage>
-    );
-
-  if (error) return <StateMessage variant="error">{error}</StateMessage>;
-
-  const featured = repos.filter((repo) =>
-    FEATURED_PROJECTS.includes(repo.name),
-  );
-
   return (
     <section className="py-12">
       <div className="flex items-center justify-between mb-8">
@@ -40,15 +23,21 @@ function FeaturedProjects({ username }: FeaturedProjectsProps) {
         </Link>
       </div>
 
-      {featured.length === 0 ? (
+      {featuredProjects.length === 0 ? (
         <p className="text-center py-12 text-muted dark:text-muted-dark">
           No featured projects found.
         </p>
       ) : (
         <div className="space-y-6">
-          {featured.map((repo, index) => (
-            <FeaturedProjectCard key={repo.id} repo={repo} index={index} />
-          ))}
+          {featuredProjects.map((project, index) => {
+            return (
+              <FeaturedProjectCard
+                key={project.name + index}
+                project={project}
+                index={index}
+              />
+            );
+          })}
         </div>
       )}
     </section>

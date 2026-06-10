@@ -1,5 +1,5 @@
 import React from "react";
-import { useGithubRepos } from "../hooks";
+import { useGithubRepos } from "../context";
 import SectionHeading from "../components/ui/SectionHeading";
 import StateMessage from "../components/ui/StateMessage";
 import ProjectCard from "../components/ui/ProjectCard";

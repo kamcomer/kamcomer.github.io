@@ -18,6 +18,7 @@ import AsciiArtPage from "./pages/demos/AsciiArtPage";
 import AchievementsPage from "./pages/demos/AchievementsPage";
 import EffectsPlayground from "./pages/demos/EffectsPlayground";
 import TerminalContextProvider from "./context/terminal/TerminalContextProvider";
+import { GithubReposProvider } from "./context/github/GithubReposProvider";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 export const AppContent = () => (
@@ -58,7 +59,9 @@ createRoot(rootElement).render(
   <BrowserRouter>
     <StrictMode>
       <TerminalContextProvider>
-        <AppContent />
+        <GithubReposProvider>
+          <AppContent />
+        </GithubReposProvider>
       </TerminalContextProvider>
     </StrictMode>
   </BrowserRouter>,
