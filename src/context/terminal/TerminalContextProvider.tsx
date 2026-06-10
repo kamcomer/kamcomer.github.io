@@ -11,10 +11,18 @@ interface TerminalContextProvider {
 
 const TerminalContextProvider: React.FC<TerminalContextProvider> = ({ children }) => {
   const [bootLines, setBootLines] = useState<BootLine[]>(defaultTerminalState.bootLines)
-  const [isMinimized, setIsMinimized] = useState<boolean>(defaultTerminalState.isMinimized)
-  const [isBooting, setIsBooting] = useState<boolean>(defaultTerminalState.isBooting)
-  const [isReady, setIsReady] = useState<boolean>(defaultTerminalState.isReady)
-  const [outputBuff, setOutputBuff] = useState<string[]>(defaultTerminalState.outputBuff)
+  const [isMinimized, setIsMinimized] = useState<boolean>(
+    () => !!localStorage.getItem('portfolio_has_visited')
+  )
+  const [isBooting, setIsBooting] = useState<boolean>(
+    () => !localStorage.getItem('portfolio_has_visited')
+  )
+  const [isReady, setIsReady] = useState<boolean>(
+    () => !!localStorage.getItem('portfolio_has_visited')
+  )
+  const [outputBuff, setOutputBuff] = useState<string[]>(
+    () => localStorage.getItem('portfolio_has_visited') ? aboutContent : []
+  )
   const [inputBuff, setInputBuff] = useState<string>(defaultTerminalState.inputBuff)
   const [cmdHistory, setCmdHistory] = useState<string[]>(defaultTerminalState.cmdHistory)
   const [cmdHistoryIdx, setCmdHistoryIdx] = useState<number>(defaultTerminalState.cmdHistoryIdx)
@@ -48,19 +56,6 @@ const TerminalContextProvider: React.FC<TerminalContextProvider> = ({ children }
 
   useEffect(() => {
     if (!isBooting || bootStartedRef.current) return;
-    
-    const hasVisited = localStorage.getItem('portfolio_has_visited');
-    
-    if (hasVisited) {
-      bootStartedRef.current = true;
-      /* eslint-disable react-hooks/set-state-in-effect */
-      setIsBooting(false);
-      setIsReady(true);
-      setIsMinimized(true);
-      setOutputBuff(aboutContent);
-      /* eslint-enable react-hooks/set-state-in-effect */
-      return;
-    }
     
     bootStartedRef.current = true;
     
