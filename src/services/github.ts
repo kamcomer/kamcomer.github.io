@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { type CommitWeek, type GithubRepo } from '../types';
+import axios from "axios";
+import { type CommitWeek, type GithubRepo } from "../types";
 
 const GITHUB_API_BASE_URL = "https://api.github.com";
 
@@ -12,7 +12,7 @@ const getGithubToken = (): string | undefined => {
 };
 
 export const fetchGithubRepos = async (
-  username: string = import.meta.env.VITE_GITHUB_USERNAME || ''
+  username: string,
 ): Promise<GithubReposResponse> => {
   try {
     let allRepos: GithubRepo[] = [];
@@ -21,11 +21,9 @@ export const fetchGithubRepos = async (
     let fetched: GithubRepo[];
     do {
       const headers: Record<string, string> = {};
-      const token = getGithubToken();
-      if (token) headers["Authorization"] = `token ${token}`;
       const reposResponse = await axios.get<GithubRepo[]>(
         `${GITHUB_API_BASE_URL}/users/${username}/repos`,
-        { params: { per_page, page }, headers }
+        { params: { per_page, page }, headers },
       );
       fetched = reposResponse.data;
       allRepos = allRepos.concat(fetched);
@@ -34,13 +32,30 @@ export const fetchGithubRepos = async (
     return { repos: allRepos };
   } catch (error) {
     console.error("Error fetching GitHub repositories:", error);
-    return { repos: [] };
+    throw error;
+  }
+};
+
+export const fetchGithubRepo = async (
+  username: string,
+  repoName: String,
+): Promise<GithubRepo | null> => {
+  try {
+    const headers: Record<string, string> = {};
+    const repoResponse = await axios.get<GithubRepo>(
+      `${GITHUB_API_BASE_URL}/repos/${username}/${repoName}`,
+      { headers },
+    );
+    return repoResponse.data;
+  } catch (error) {
+    console.error("Error fetching GitHub repository:", error);
+    throw error;
   }
 };
 
 export const fetchGithubCommitHistory = async (
-  username: string = import.meta.env.VITE_GITHUB_USERNAME || '',
-  year: number = new Date().getFullYear()
+  username: string,
+  year: number = new Date().getFullYear(),
 ): Promise<CommitWeek[]> => {
   try {
     let allRepos: GithubRepo[] = [];
@@ -53,7 +68,7 @@ export const fetchGithubCommitHistory = async (
       if (token) headers["Authorization"] = `token ${token}`;
       const reposResponse = await axios.get<GithubRepo[]>(
         `${GITHUB_API_BASE_URL}/users/${username}/repos`,
-        { params: { per_page, page }, headers }
+        { params: { per_page, page }, headers },
       );
       fetched = reposResponse.data;
       allRepos = allRepos.concat(fetched);
@@ -73,9 +88,11 @@ export const fetchGithubCommitHistory = async (
           const headers: Record<string, string> = {};
           const token = getGithubToken();
           if (token) headers["Authorization"] = `token ${token}`;
-          const activityRes = await axios.get<Array<{ week: number; total: number; days: number[] }>>(
+          const activityRes = await axios.get<
+            Array<{ week: number; total: number; days: number[] }>
+          >(
             `${GITHUB_API_BASE_URL}/repos/${username}/${repo.name}/stats/commit_activity`,
-            { headers }
+            { headers },
           );
           const activity = activityRes.data;
           if (Array.isArray(activity) && activity.length > 0) {
@@ -84,7 +101,8 @@ export const fetchGithubCommitHistory = async (
               if (weekStart >= startOfYear && weekStart <= endOfYear) {
                 week.days.forEach((count, d) => {
                   const weekOfYear = Math.floor(
-                    (weekStart.getTime() - startOfYear.getTime()) / (7 * 24 * 60 * 60 * 1000)
+                    (weekStart.getTime() - startOfYear.getTime()) /
+                      (7 * 24 * 60 * 60 * 1000),
                   );
                   if (weekOfYear >= 0 && weekOfYear < 53) {
                     weekData[weekOfYear].days[d] += count;
@@ -96,7 +114,7 @@ export const fetchGithubCommitHistory = async (
         } catch {
           // Ignore errors for individual repos
         }
-      })
+      }),
     );
 
     while (
@@ -108,11 +126,11 @@ export const fetchGithubCommitHistory = async (
 
     const fullYearWeeks: CommitWeek[] = Array.from(
       { length: 52 },
-      (_, i) => weekData[i] || { days: [0, 0, 0, 0, 0, 0, 0] }
+      (_, i) => weekData[i] || { days: [0, 0, 0, 0, 0, 0, 0] },
     );
     return fullYearWeeks;
   } catch (error) {
     console.error("Error fetching commit history:", error);
-    return Array.from({ length: 52 }, () => ({ days: [0, 0, 0, 0, 0, 0, 0] }));
+    throw error;
   }
 };
