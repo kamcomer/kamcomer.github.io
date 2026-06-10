@@ -1,5 +1,5 @@
 import { EffectKey } from "../../types";
-import { BootLine, BootLineType, terminalConfig } from "../../config/terminal";
+import { BootLine, BootLineType, terminalConfig } from "../../config/terminal"
 
 export type { BootLine };
 

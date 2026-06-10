@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { personalInfo } from '../../config/personal';
-import { socialLinks } from '../../config/social';
+import React, { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { personalInfo } from "../../config"
+import { socialLinks } from "../../config";
 
 const TerminalPage: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
   const [output, setOutput] = useState<string[]>([
     '> Welcome to the command palette. Type "help" for available commands.',
   ]);
@@ -18,7 +18,7 @@ const TerminalPage: React.FC = () => {
     help: () => {
       return `Available commands:
   help        - Show this help message
-  about       - Learn about ${personalInfo.name.split(' ')[0]}
+  about       - Learn about ${personalInfo.name.split(" ")[0]}
   projects    - View my projects
   blog        - Read my blog
   contact     - Get in touch
@@ -42,35 +42,38 @@ ${personalInfo.tagline}`;
       return `Opening contact form... [redirect to /#contact]`;
     },
     github: () => {
-      window.open(`https://github.com/${socialLinks.github}`, '_blank');
-      return 'Opening GitHub profile in new tab...';
+      window.open(`https://github.com/${socialLinks.github}`, "_blank");
+      return "Opening GitHub profile in new tab...";
     },
     clear: () => {
       setOutput([]);
-      return '';
+      return "";
     },
     whoami: () => {
-      return 'visitor@portfolio';
+      return "visitor@portfolio";
     },
     theme: () => {
-      document.documentElement.classList.toggle('dark');
-      localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
-      return `Theme switched to ${document.documentElement.classList.contains('dark') ? 'dark' : 'light'} mode`;
+      document.documentElement.classList.toggle("dark");
+      localStorage.setItem(
+        "theme",
+        document.documentElement.classList.contains("dark") ? "dark" : "light",
+      );
+      return `Theme switched to ${document.documentElement.classList.contains("dark") ? "dark" : "light"} mode`;
     },
   };
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
         e.preventDefault();
-        setIsOpen(prev => !prev);
+        setIsOpen((prev) => !prev);
       }
-      if (e.key === 'Escape') {
+      if (e.key === "Escape") {
         setIsOpen(false);
       }
     };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
   useEffect(() => {
@@ -87,13 +90,13 @@ ${personalInfo.tagline}`;
 
   const executeCommand = (cmd: string) => {
     const trimmed = cmd.trim().toLowerCase();
-    const parts = trimmed.split(' ');
+    const parts = trimmed.split(" ");
     const command = parts[0];
     const args = parts.slice(1);
 
     if (!command) return;
 
-    if (command === 'clear') {
+    if (command === "clear") {
       setOutput([]);
       return;
     }
@@ -102,38 +105,45 @@ ${personalInfo.tagline}`;
     if (handler) {
       const result = handler(args);
       if (result) {
-        setOutput(prev => [...prev, `> ${cmd}`, result]);
+        setOutput((prev) => [...prev, `> ${cmd}`, result]);
       }
     } else {
-      setOutput(prev => [...prev, `> ${cmd}`, `Command not found: ${command}. Type "help" for available commands.`]);
+      setOutput((prev) => [
+        ...prev,
+        `> ${cmd}`,
+        `Command not found: ${command}. Type "help" for available commands.`,
+      ]);
     }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (input.trim()) {
-      setHistory(prev => [...prev, input]);
+      setHistory((prev) => [...prev, input]);
       setHistoryIndex(-1);
       executeCommand(input);
-      setInput('');
+      setInput("");
     }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'ArrowUp') {
+    if (e.key === "ArrowUp") {
       e.preventDefault();
       if (history.length > 0) {
-        const newIndex = historyIndex === -1 ? history.length - 1 : Math.max(0, historyIndex - 1);
+        const newIndex =
+          historyIndex === -1
+            ? history.length - 1
+            : Math.max(0, historyIndex - 1);
         setHistoryIndex(newIndex);
         setInput(history[newIndex]);
       }
-    } else if (e.key === 'ArrowDown') {
+    } else if (e.key === "ArrowDown") {
       e.preventDefault();
       if (historyIndex !== -1) {
         const newIndex = historyIndex + 1;
         if (newIndex >= history.length) {
           setHistoryIndex(-1);
-          setInput('');
+          setInput("");
         } else {
           setHistoryIndex(newIndex);
           setInput(history[newIndex]);
@@ -145,9 +155,19 @@ ${personalInfo.tagline}`;
   return (
     <div className="max-w-4xl mx-auto py-12">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-primary dark:text-primary-dark mb-2">Command Palette</h1>
+        <h1 className="text-3xl font-bold text-primary dark:text-primary-dark mb-2">
+          Command Palette
+        </h1>
         <p className="text-muted dark:text-muted-dark">
-          Press <kbd className="px-2 py-1 bg-bg2 dark:bg-bg2-dark border border-borderMuted rounded-sm text-sm">⌘K</kbd> or <kbd className="px-2 py-1 bg-bg2 dark:bg-bg2-dark border border-borderMuted rounded-sm text-sm">Ctrl+K</kbd> to open the terminal palette
+          Press{" "}
+          <kbd className="px-2 py-1 bg-bg2 dark:bg-bg2-dark border border-borderMuted rounded-sm text-sm">
+            ⌘K
+          </kbd>{" "}
+          or{" "}
+          <kbd className="px-2 py-1 bg-bg2 dark:bg-bg2-dark border border-borderMuted rounded-sm text-sm">
+            Ctrl+K
+          </kbd>{" "}
+          to open the terminal palette
         </p>
       </div>
 
@@ -156,20 +176,25 @@ ${personalInfo.tagline}`;
           <div className="w-3 h-3 rounded-full bg-danger" />
           <div className="w-3 h-3 rounded-full bg-warning" />
           <div className="w-3 h-3 rounded-full bg-success" />
-          <span className="ml-2 text-sm text-muted dark:text-muted-dark">terminal</span>
+          <span className="ml-2 text-sm text-muted dark:text-muted-dark">
+            terminal
+          </span>
         </div>
 
-        <div
-          className="p-4 min-h-[300px] font-mono text-sm"
-        >
+        <div className="p-4 min-h-[300px] font-mono text-sm">
           <div ref={outputRef} className="space-y-1 mb-2">
             {output.map((line, i) => (
-              <div key={i} className="text-text dark:text-text-dark whitespace-pre-wrap">{line}</div>
+              <div
+                key={i}
+                className="text-text dark:text-text-dark whitespace-pre-wrap"
+              >
+                {line}
+              </div>
             ))}
           </div>
 
           <form onSubmit={handleSubmit} className="flex items-center gap-2">
-            <span className="text-primary dark:text-primary-dark">{'>'}</span>
+            <span className="text-primary dark:text-primary-dark">{">"}</span>
             <input
               ref={inputRef}
               type="text"
@@ -201,7 +226,9 @@ ${personalInfo.tagline}`;
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center gap-2 px-4 py-3 border-b border-borderMuted">
-                <span className="text-primary dark:text-primary-dark">{'>'}</span>
+                <span className="text-primary dark:text-primary-dark">
+                  {">"}
+                </span>
                 <input
                   ref={inputRef}
                   type="text"
@@ -213,18 +240,27 @@ ${personalInfo.tagline}`;
                   placeholder="Type a command..."
                   autoFocus
                 />
-                <kbd className="px-2 py-1 text-xs bg-bg dark:bg-bg-dark border border-borderMuted rounded-sm text-muted">ESC</kbd>
+                <kbd className="px-2 py-1 text-xs bg-bg dark:bg-bg-dark border border-borderMuted rounded-sm text-muted">
+                  ESC
+                </kbd>
               </div>
               <div className="p-4 max-h-64 overflow-y-auto">
-                <div className="text-sm text-muted dark:text-muted-dark mb-2">Available commands:</div>
+                <div className="text-sm text-muted dark:text-muted-dark mb-2">
+                  Available commands:
+                </div>
                 <div className="grid grid-cols-2 gap-2">
                   {Object.keys(commands).map((cmd) => (
                     <button
                       key={cmd}
-                      onClick={() => { setInput(cmd); inputRef.current?.focus(); }}
+                      onClick={() => {
+                        setInput(cmd);
+                        inputRef.current?.focus();
+                      }}
                       className="px-3 py-2 text-left text-sm bg-bg dark:bg-bg-dark border border-borderMuted hover:border-primary dark:hover:border-primary-dark transition-colors"
                     >
-                      <span className="text-primary dark:text-primary-dark">{cmd}</span>
+                      <span className="text-primary dark:text-primary-dark">
+                        {cmd}
+                      </span>
                     </button>
                   ))}
                 </div>

@@ -4,7 +4,7 @@ import TerminalPrompt from "./TerminalPrompt";
 import TypewriterWithDelete from "./TypewriterWithDelete";
 import StaggeredLines from "./StaggeredLines";
 import InfiniteTypewriter from "./InfiniteTypewriter";
-import { personalInfo } from "../../config/personal";
+import { personalInfo } from "../../config"
 
 type Speed = "slow" | "normal" | "fast";
 

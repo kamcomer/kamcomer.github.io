@@ -1,5 +1,5 @@
 import React from 'react';
-import { personalInfo } from '../../config/personal';
+import { personalInfo } from '../../config'
 import SectionHeading from '../ui/SectionHeading';
 
 const AboutSection = () => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { personalInfo } from '../../config/personal';
+import { personalInfo } from '../../config'
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();

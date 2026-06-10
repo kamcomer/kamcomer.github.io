@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { skillCategories } from "../../config/skills";
+import { skillCategories } from "../../config"
 import SectionHeading from "../ui/SectionHeading";
 
 const containerVariants = {

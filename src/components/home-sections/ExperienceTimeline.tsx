@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { experiences } from "../../config/experience";
+import { experiences } from "../../config"
 import { Experience } from "../../types";
 import SectionHeading from "../ui/SectionHeading";
 import Tag from "../ui/Tag";
