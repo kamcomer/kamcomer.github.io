@@ -1,9 +1,9 @@
-import { useCallback } from 'react'
-import { TerminalState } from '../components/terminal/types'
-import { EffectKey } from '../types'
-import { Effects } from '../components/procedural-effects/types'
-import { socialLinks } from '../config/social'
-import { parseCommandInput, parseHexColor } from '../utils/commandParser'
+import { useCallback } from "react";
+import { TerminalState } from "../components/terminal/types";
+import { EffectKey } from "../types";
+import { Effects } from "../components/procedural-effects/types";
+import { socialLinks } from "../config";
+import { parseCommandInput, parseHexColor } from "../utils/commandParser";
 
 const DONUT_FLAGS = `
   --speedA    Rotation speed around tube (0-0.1)
@@ -12,7 +12,7 @@ const DONUT_FLAGS = `
   --thetaStep Detail level around tube (0.01-0.2)
   --phiStep   Detail level around torus (0.01-0.1)
   --fontSizeMin Minimum font size (5-20)
-  --fontSizeMax Maximum font size (5-30)`
+  --fontSizeMax Maximum font size (5-30)`;
 
 const CUBE_FLAGS = `
   --speedX    X-axis rotation speed (0-0.1)
@@ -22,23 +22,26 @@ const CUBE_FLAGS = `
   --k2        Depth offset (1-20)
   --centerX   X offset (-200 to 200)
   --centerY   Y offset (-200 to 200)
-  --color     Hex color (e.g., #ff0000 or ff0000)`
+  --color     Hex color (e.g., #ff0000 or ff0000)`;
 
 interface UseTerminalCommandsProps {
-  state: TerminalState
+  state: TerminalState;
 }
 
-export default function useTerminalCommands({ state }: UseTerminalCommandsProps) {
-  const executeCommand = useCallback((cmd: string): string | undefined => {
-    const { args, flags } = parseCommandInput(cmd.trim().toLowerCase())
-    const command = args[0]
+export default function useTerminalCommands({
+  state,
+}: UseTerminalCommandsProps) {
+  const executeCommand = useCallback(
+    (cmd: string): string | undefined => {
+      const { args, flags } = parseCommandInput(cmd.trim().toLowerCase());
+      const command = args[0];
 
-    if (!command) return
+      if (!command) return;
 
-    switch (command) {
-      case 'help':
-        if (args[1] === '-h' || args[1] === '--help') {
-          return `Usage: help [command]
+      switch (command) {
+        case "help":
+          if (args[1] === "-h" || args[1] === "--help") {
+            return `Usage: help [command]
 Options:
   -h, --help    Show help information
 
@@ -55,9 +58,9 @@ Available commands:
   effects     - List available hero effects
   effect      - Display hero effect (life, flow, lissajous, boids, donut, cube)
   exit        - Minimize terminal
-  whoami      - Display current user`
-        }
-        return `Available commands:
+  whoami      - Display current user`;
+          }
+          return `Available commands:
   help        - Show this help message
   about       - About me
   experience  - Experience & work history
@@ -70,46 +73,51 @@ Available commands:
   effects     - List available hero effects
   effect      - Display hero effect (life, flow, lissajous, boids, donut, cube)
   exit        - Minimize terminal
-  whoami      - Display current user`
+  whoami      - Display current user`;
 
-      case 'about':
-        window.location.href = '#about'
-        return 'Navigating to about section...'
+        case "about":
+          window.location.href = "#about";
+          return "Navigating to about section...";
 
-      case 'experience':
-        window.location.href = '#experience'
-        return 'Navigating to experience section...'
+        case "experience":
+          window.location.href = "#experience";
+          return "Navigating to experience section...";
 
-      case 'projects':
-        window.location.href = '#projects'
-        return 'Navigating to projects section...'
+        case "projects":
+          window.location.href = "#projects";
+          return "Navigating to projects section...";
 
-      case 'skills':
-        window.location.href = '#skills'
-        return 'Navigating to skills section...'
+        case "skills":
+          window.location.href = "#skills";
+          return "Navigating to skills section...";
 
-      case 'contact':
-        window.location.href = '#contact'
-        return 'Navigating to contact section...'
+        case "contact":
+          window.location.href = "#contact";
+          return "Navigating to contact section...";
 
-      case 'github':
-        window.open(`https://github.com/${socialLinks.github}`, '_blank')
-        return 'Opening GitHub profile in new tab...'
+        case "github":
+          window.open(`https://github.com/${socialLinks.github}`, "_blank");
+          return "Opening GitHub profile in new tab...";
 
-      case 'clear':
-        state.setOutputBuff([])
-        return ''
+        case "clear":
+          state.setOutputBuff([]);
+          return "";
 
-      case 'theme':
-        document.documentElement.classList.toggle('dark')
-        localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light')
-        return `Theme switched to ${document.documentElement.classList.contains('dark') ? 'dark' : 'light'} mode`
+        case "theme":
+          document.documentElement.classList.toggle("dark");
+          localStorage.setItem(
+            "theme",
+            document.documentElement.classList.contains("dark")
+              ? "dark"
+              : "light",
+          );
+          return `Theme switched to ${document.documentElement.classList.contains("dark") ? "dark" : "light"} mode`;
 
-      case 'whoami':
-        return 'visitor@portfolio-os'
+        case "whoami":
+          return "visitor@portfolio-os";
 
-      case 'effects':
-        return `Available hero effects:
+        case "effects":
+          return `Available hero effects:
   life      - Conway's Game of Life
   flow      - Flow Field
   lissajous - Lissajous Curves
@@ -118,116 +126,151 @@ Available commands:
   cube      - 3D Cube (Wireframe)
   
 Usage: effect <name> [--flag=value]
-Type "effect help" for available flags`
+Type "effect help" for available flags`;
 
-      case 'effect': {
-        // Handle help flags
-        if (args[1] === 'help' || args[1] === '-h' || args[1] === '--help' || args[2] === 'help' || args[2] === '-h' || args[2] === '--help') {
-          const effectName = (args[1] === 'help' || args[1] === '-h' || args[1] === '--help') ? args[2] : args[1];
-          if (!effectName) {
-            return `Usage: effect <name> [--flag=value]
+        case "effect": {
+          // Handle help flags
+          if (
+            args[1] === "help" ||
+            args[1] === "-h" ||
+            args[1] === "--help" ||
+            args[2] === "help" ||
+            args[2] === "-h" ||
+            args[2] === "--help"
+          ) {
+            const effectName =
+              args[1] === "help" || args[1] === "-h" || args[1] === "--help"
+                ? args[2]
+                : args[1];
+            if (!effectName) {
+              return `Usage: effect <name> [--flag=value]
 Available effects: life, flow, lissajous, boids, donut, cube
 
 Type "effect <name> help" for effect-specific flags`;
+            }
+
+            if (effectName === "donut") {
+              return `Donut effect flags:${DONUT_FLAGS}`;
+            } else if (effectName === "cube") {
+              return `Cube effect flags:${CUBE_FLAGS}`;
+            }
+            return `No configurable flags for ${effectName}`;
           }
 
-          if (effectName === 'donut') {
-            return `Donut effect flags:${DONUT_FLAGS}`;
-          } else if (effectName === 'cube') {
-            return `Cube effect flags:${CUBE_FLAGS}`;
-          }
-          return `No configurable flags for ${effectName}`;
-        }
-
-        if (!args[1]) {
-          return `Usage: effect <name> [--flag=value]
+          if (!args[1]) {
+            return `Usage: effect <name> [--flag=value]
 Type "effect help" for available flags
 
-Available effects: life, flow, lissajous, boids, donut, cube`
-        }
+Available effects: life, flow, lissajous, boids, donut, cube`;
+          }
 
-        const effectKey = args[1] as EffectKey
-        if (!Effects[effectKey]) {
-          return `Unknown effect: ${args[1]}. Type "effects" for available options.`
-        }
+          const effectKey = args[1] as EffectKey;
+          if (!Effects[effectKey]) {
+            return `Unknown effect: ${args[1]}. Type "effects" for available options.`;
+          }
 
-        const config: Record<string, unknown> = {};
+          const config: Record<string, unknown> = {};
 
-        for (const [key, value] of Object.entries(flags)) {
-          if (key === 'color' && value) {
-            const color = parseHexColor(value);
-            if (color) {
-              config.color = color;
-            }
-          } else if (['speedA', 'speedB', 'speedX', 'speedY', 'speedZ', 'thetaStep', 'phiStep', 'fontSizeMin', 'fontSizeMax', 'k1', 'k2', 'centerX', 'centerY'].includes(key)) {
-            const num = parseFloat(value);
-            if (!isNaN(num)) {
-              config[key] = num;
+          for (const [key, value] of Object.entries(flags)) {
+            if (key === "color" && value) {
+              const color = parseHexColor(value);
+              if (color) {
+                config.color = color;
+              }
+            } else if (
+              [
+                "speedA",
+                "speedB",
+                "speedX",
+                "speedY",
+                "speedZ",
+                "thetaStep",
+                "phiStep",
+                "fontSizeMin",
+                "fontSizeMax",
+                "k1",
+                "k2",
+                "centerX",
+                "centerY",
+              ].includes(key)
+            ) {
+              const num = parseFloat(value);
+              if (!isNaN(num)) {
+                config[key] = num;
+              }
             }
           }
+
+          state.setEffectConfig({});
+          state.setCurrentEffect(effectKey);
+          state.setEffectConfig(config);
+
+          const flagCount = Object.keys(flags).length;
+          if (flagCount > 0) {
+            return `Loading ${Effects[effectKey].label} with ${flagCount} custom parameter(s)...`;
+          }
+          return `Loading ${Effects[effectKey].label}...`;
         }
 
-        state.setEffectConfig({});
-        state.setCurrentEffect(effectKey);
-        state.setEffectConfig(config);
+        case "exit":
+          state.setMinimizedEffect(null);
+          state.setIsMinimized(!state.isMinimized);
+          return "Terminal minimized. Click the terminal button to restore.";
 
-        const flagCount = Object.keys(flags).length;
-        if (flagCount > 0) {
-          return `Loading ${Effects[effectKey].label} with ${flagCount} custom parameter(s)...`;
+        default:
+          return `Command not found: ${command}. Type "help" for available commands.`;
+      }
+    },
+    [state],
+  );
+
+  const handleSubmit = useCallback(
+    (e: React.ChangeEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      if (state.inputBuff.trim()) {
+        state.appendCmdHistory(state.inputBuff);
+        state.setCmdHistoryIdx(-1);
+        const result = executeCommand(state.inputBuff);
+        if (result) {
+          state.appendOutputBuff([`> ${state.inputBuff}`, result]);
         }
-        return `Loading ${Effects[effectKey].label}...`
+        state.setInputBuff("");
       }
+    },
+    [state, executeCommand],
+  );
 
-      case 'exit':
-        state.setMinimizedEffect(null)
-        state.setIsMinimized(!state.isMinimized)
-        return 'Terminal minimized. Click the terminal button to restore.'
-
-      default:
-        return `Command not found: ${command}. Type "help" for available commands.`
-    }
-  }, [state])
-
-  const handleSubmit = useCallback((e: React.ChangeEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    if (state.inputBuff.trim()) {
-      state.appendCmdHistory(state.inputBuff)
-      state.setCmdHistoryIdx(-1)
-      const result = executeCommand(state.inputBuff)
-      if (result) {
-        state.appendOutputBuff([`> ${state.inputBuff}`, result])
-      }
-      state.setInputBuff('')
-    }
-  }, [state, executeCommand])
-
-  const handleKeyDown = useCallback((e: React.KeyboardEvent, onMinimize: () => void) => {
-    if (e.key === 'Escape') {
-      e.preventDefault()
-      onMinimize()
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault()
-      if (state.cmdHistory.length > 0) {
-        const newIndex = state.cmdHistoryIdx === -1
-          ? state.cmdHistory.length - 1
-          : Math.max(0, state.cmdHistoryIdx - 1)
-        state.setCmdHistoryIdx(newIndex)
-        state.setInputBuff(state.cmdHistory[newIndex])
-      }
-    } else if (e.key === 'ArrowDown') {
-      e.preventDefault()
-      if (state.cmdHistoryIdx !== -1) {
-        const newIndex = state.cmdHistoryIdx + 1
-        if (newIndex >= state.cmdHistory.length) {
-          state.setCmdHistoryIdx(-1)
-          state.setInputBuff('')
-        } else {
-          state.setCmdHistoryIdx(newIndex)
-          state.setInputBuff(state.cmdHistory[newIndex])
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent, onMinimize: () => void) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        onMinimize();
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        if (state.cmdHistory.length > 0) {
+          const newIndex =
+            state.cmdHistoryIdx === -1
+              ? state.cmdHistory.length - 1
+              : Math.max(0, state.cmdHistoryIdx - 1);
+          state.setCmdHistoryIdx(newIndex);
+          state.setInputBuff(state.cmdHistory[newIndex]);
+        }
+      } else if (e.key === "ArrowDown") {
+        e.preventDefault();
+        if (state.cmdHistoryIdx !== -1) {
+          const newIndex = state.cmdHistoryIdx + 1;
+          if (newIndex >= state.cmdHistory.length) {
+            state.setCmdHistoryIdx(-1);
+            state.setInputBuff("");
+          } else {
+            state.setCmdHistoryIdx(newIndex);
+            state.setInputBuff(state.cmdHistory[newIndex]);
+          }
         }
       }
-    }
-  }, [state])
+    },
+    [state],
+  );
 
-  return { executeCommand, handleSubmit, handleKeyDown }
+  return { executeCommand, handleSubmit, handleKeyDown };
 }

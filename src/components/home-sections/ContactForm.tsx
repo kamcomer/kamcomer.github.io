@@ -1,6 +1,6 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import { motion } from "framer-motion";
-import { socialLinks } from "../../config/social";
+import { socialLinks } from "../../config";
 import SectionHeading from "../ui/SectionHeading";
 import FormInput from "../ui/FormInput";
 import FormTextarea from "../ui/FormTextarea";
@@ -16,7 +16,6 @@ interface SocialLink {
   url: string;
   icon: string;
 }
-
 
 const links: SocialLink[] = [
   {
