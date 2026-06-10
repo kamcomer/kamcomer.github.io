@@ -1,5 +1,4 @@
-/* eslint-disable react-hooks/use-memo, react-hooks/exhaustive-deps */
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 
 interface UseFetchState<T> {
   data: T | null;
@@ -13,51 +12,45 @@ interface UseFetchReturn<T> extends UseFetchState<T> {
 
 function useFetch<T>(
   fetcher: () => Promise<T>,
-  deps: React.DependencyList = []
 ): UseFetchReturn<T> {
   const [state, setState] = useState<UseFetchState<T>>({
     data: null,
     loading: true,
     error: null,
   });
-
-  const fetchData = useCallback(async () => {
-    let cancelled = false;
-
-    setState(prev => ({ ...prev, loading: true, error: null }));
-
-    try {
-      const result = await fetcher();
-      if (!cancelled) {
-        setState({ data: result, loading: false, error: null });
-      }
-    } catch (err) {
-      if (!cancelled) {
-        const message = err instanceof Error ? err.message : 'An error occurred';
-        setState({ data: null, loading: false, error: message });
-      }
-    }
-
-    return () => {
-      cancelled = true;
-    };
-  }, deps);
+  const fetcherRef = useRef(fetcher);
 
   useEffect(() => {
-    const cleanup = fetchData();
-    return () => {
-      cleanup?.then(cleanupFn => cleanupFn?.());
+    fetcherRef.current = fetcher;
+  });
+
+  const [trigger, setTrigger] = useState(0);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const run = async () => {
+      setState(prev => ({ ...prev, loading: true, error: null }));
+      try {
+        const result = await fetcherRef.current();
+        if (!cancelled) {
+          setState({ data: result, loading: false, error: null });
+        }
+      } catch (err) {
+        if (!cancelled) {
+          const message = err instanceof Error ? err.message : 'An error occurred';
+          setState({ data: null, loading: false, error: message });
+        }
+      }
     };
-  }, [fetchData]);
 
-  const refetch = useCallback(() => {
-    fetchData();
-  }, [fetchData]);
+    run();
+    return () => { cancelled = true };
+  }, [trigger]);
 
-  return {
-    ...state,
-    refetch,
-  };
+  const refetch = useCallback(() => setTrigger(t => t + 1), []);
+
+  return { ...state, refetch };
 }
 
 export default useFetch;
