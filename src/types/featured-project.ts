@@ -1,5 +1,3 @@
-
-
 export interface FeaturedProject {
   name: string;
   title: string;
