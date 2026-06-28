@@ -117,7 +117,7 @@ VITE_LINKEDIN_USERNAME=your-username
 
 This repo is configured for deployment to the GitHub Pages repo site at:
 
-- `https://syntaxDuck.github.io/portfolio/`
+- `https://kamcomer.github.io/portfolio/`
 
 Deployment uses a GitHub Actions workflow in `.github/workflows/deploy-gh-pages-branch.yml`.
 

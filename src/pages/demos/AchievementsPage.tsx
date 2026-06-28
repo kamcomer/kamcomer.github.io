@@ -18,7 +18,7 @@ interface GitHubEvent {
   type: string;
 }
 
-const GITHUB_USERNAME = 'syntaxDuck';
+const GITHUB_USERNAME = 'kamcomer';
 
 const allAchievements: Omit<Achievement, 'earned' | 'earnedDate'>[] = [
   { id: 'starstruck', title: 'Starstruck', description: 'Created a repository that has 1000 stars', icon: '⭐' },

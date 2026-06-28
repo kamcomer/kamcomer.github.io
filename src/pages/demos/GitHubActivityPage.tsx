@@ -26,7 +26,7 @@ interface GitHubEvent {
   };
 }
 
-const GITHUB_USERNAME = 'syntaxDuck';
+const GITHUB_USERNAME = 'kamcomer';
 
 const eventTypeLabels: Record<string, { label: string; color: string }> = {
   PushEvent: { label: 'PUSH', color: 'text-success' },

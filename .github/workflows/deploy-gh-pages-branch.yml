@@ -33,7 +33,7 @@ jobs:
       - name: Build for GitHub Pages
         run: npm run build:pages
         env:
-          VITE_GITHUB_USERNAME: ${{ vars.VITE_GITHUB_USERNAME || 'syntaxDuck' }}
+          VITE_GITHUB_USERNAME: ${{ vars.VITE_GITHUB_USERNAME || 'kamcomer' }}
           VITE_LINKEDIN_USERNAME: ${{ vars.VITE_LINKEDIN_USERNAME || 'kameron-comer' }}
 
       - name: Publish dist to gh-pages
