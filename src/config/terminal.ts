@@ -60,7 +60,7 @@ export const terminalConfig: TerminalConfig = {
     "",
     "Full-Stack Developer",
     "",
-    'Type "help" for commands or scroll down to explore.',
+    'Type "help" for commands',
     "",
     "↓ Scroll to explore",
   ],
