@@ -109,21 +109,21 @@ VITE_LINKEDIN_USERNAME=your-username
 |---------|-------------|
 | `pnpm dev` | Start development server |
 | `pnpm build` | Build for production |
-| `npm run build:pages` | Build with GitHub Pages base path |
+| `npm run build:pages` | Build for GitHub Pages deployment |
 | `pnpm preview` | Preview production build |
 | `pnpm lint` | Run ESLint |
 
 ## GitHub Pages
 
-This repo is configured for deployment to the GitHub Pages repo site at:
+This repo is configured for deployment to the GitHub Pages user site at:
 
-- `https://kamcomer.github.io/portfolio/`
+- `https://kamcomer.github.io/`
 
 Deployment uses a GitHub Actions workflow in `.github/workflows/deploy-gh-pages-branch.yml`.
 
 Notes:
 
-- The production Pages build uses a `/portfolio/` base path.
+- The production build uses the site root `/` base path.
 - SPA deep links such as `/resume` and `/projects` are supported with a `404.html` redirect fallback.
 - The workflow publishes the built site to the `gh-pages` branch.
 - Set repository variables if needed:

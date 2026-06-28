@@ -1,11 +1,8 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-const githubPagesBase = '/portfolio/';
-const isGitHubPagesBuild = process.env.GITHUB_PAGES === 'true';
-
 export default defineConfig({
-  base: isGitHubPagesBuild ? githubPagesBase : '/',
+  base: '/',
   plugins: [react()],
   server: {
     port: 3000,
