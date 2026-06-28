@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { FeaturedProject } from "../../../types";
-import { useGithubRepos, useTheme } from "../../../context";
+import { useGithubRepos } from "../../../context";
 import Tag from "../../ui/Tag";
 
 interface FeaturedProjectCardProps {
@@ -9,28 +9,19 @@ interface FeaturedProjectCardProps {
   index: number;
 }
 
-const lightColors = [
-  "from-primary-light to-secondary-light",
-  "from-primary-light to-accent-light",
-  "from-secondary-light to-primary-light",
-  "from-accent-light to-primary-light",
-  "from-secondary-light to-accent-light",
-];
-
-const darkColors = [
-  "from-primary-dark to-secondary-dark",
-  "from-primary-dark to-accent-dark",
-  "from-secondary-dark to-primary-dark",
-  "from-accent-dark to-primary-dark",
-  "from-secondary-dark to-accent-dark",
-];
-
 function FeaturedProjectCard({ project, index }: FeaturedProjectCardProps) {
-  const { theme } = useTheme();
-  const palette = theme === "dark" ? darkColors : lightColors;
-  const gradient = palette[index % palette.length];
-  const { getRepoByName, loading, error } = useGithubRepos();
+  const { getRepoByName } = useGithubRepos();
   const repo = getRepoByName(project.name);
+  const displayedLanguages =
+    repo?.topLanguages?.length ? repo.topLanguages.slice(0, 2) : repo?.language ? [repo.language] : [];
+  const normalizedDisplayedLanguages = displayedLanguages.map((language) =>
+    language.toLowerCase(),
+  );
+  const visibleTechTags = normalizedDisplayedLanguages.length > 0
+    ? project.techTags.filter(
+        (tag) => !normalizedDisplayedLanguages.includes(tag.toLowerCase()),
+      )
+    : project.techTags;
 
   return (
     <motion.div
@@ -41,26 +32,6 @@ function FeaturedProjectCard({ project, index }: FeaturedProjectCardProps) {
       className="flex flex-col md:flex-row bg-bg2 dark:bg-bg2-dark border border-borderMuted dark:border-borderMuted"
     >
       <div className="w-full flex flex-col md:flex-row">
-        {/* {project.imgUrl && (
-          <div className="w-full md:w-64 h-48 md:h-auto flex items-center justify-center flex-shrink-0">
-            <img
-              src={project.imgUrl}
-              alt={project.title}
-              className="w-full h-full object-cover"
-            />
-          </div>
-        )}
-
-        {!project.imgUrl && (
-          <div
-            className={`w-full md:w-64 h-48 md:h-auto bg-gradient-to-br ${gradient} flex items-center justify-center flex-shrink-0`}
-          >
-            <span className="text-4xl text-white/50 font-mono">
-              {project.name.charAt(0).toUpperCase()}
-            </span>
-          </div>
-        )} */}
-
         <div className="flex-1 p-5 flex flex-col justify-between">
           <div>
             <div className="flex items-start justify-between mb-2">
@@ -74,21 +45,30 @@ function FeaturedProjectCard({ project, index }: FeaturedProjectCardProps) {
                   {project.name}
                 </a>
               </h3>
-              {repo?.language && (
-                <span className="text-xs text-muted dark:text-muted-dark font-mono flex-shrink-0 ml-2">
-                  {repo.language}
-                </span>
+              {displayedLanguages.length > 0 && (
+                <div className="ml-2 flex flex-shrink-0 flex-wrap justify-end gap-2">
+                  {displayedLanguages.map((language) => (
+                    <span
+                      key={language}
+                      className="border border-borderMuted px-2 py-1 text-[10px] uppercase tracking-[0.15em] text-muted dark:text-muted-dark"
+                    >
+                      {language}
+                    </span>
+                  ))}
+                </div>
               )}
             </div>
 
-            <p className="text-sm text-muted dark:text-muted-dark mb-4 line-clamp-2">
+            <p className="text-sm leading-7 text-muted dark:text-muted-dark mb-4">
               {project.description}
             </p>
 
             {project.highlights && (
               <div className="mb-4 text-sm text-muted dark:text-muted-dark">
-                Highlights:
-                <ul className="list-disc list-outside ml-4 mb-4 text-sm text-muted dark:text-muted-dark">
+                <p className="mb-3 text-xs uppercase tracking-[0.2em] text-primary dark:text-primary-dark">
+                  Why it matters
+                </p>
+                <ul className="space-y-2 border-l border-borderMuted pl-4 text-sm leading-7 text-muted dark:text-muted-dark">
                   {project.highlights?.map((highlight, idx) => (
                     <li key={idx}>{highlight}</li>
                   ))}
@@ -97,7 +77,7 @@ function FeaturedProjectCard({ project, index }: FeaturedProjectCardProps) {
             )}
 
             <div className="flex flex-wrap gap-2">
-              {project.techTags.map((tag, idx) => (
+              {visibleTechTags.map((tag, idx) => (
                 <Tag key={idx}>{tag}</Tag>
               ))}
             </div>

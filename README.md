@@ -109,5 +109,22 @@ VITE_LINKEDIN_USERNAME=your-username
 |---------|-------------|
 | `pnpm dev` | Start development server |
 | `pnpm build` | Build for production |
+| `npm run build:pages` | Build with GitHub Pages base path |
 | `pnpm preview` | Preview production build |
 | `pnpm lint` | Run ESLint |
+
+## GitHub Pages
+
+This repo is configured for deployment to the GitHub Pages repo site at:
+
+- `https://syntaxDuck.github.io/portfolio/`
+
+Deployment uses a GitHub Actions workflow in `.github/workflows/deploy-pages.yml`.
+
+Notes:
+
+- The production Pages build uses a `/portfolio/` base path.
+- SPA deep links such as `/resume` and `/projects` are supported with a `404.html` redirect fallback.
+- Set repository variables if needed:
+  - `VITE_GITHUB_USERNAME`
+  - `VITE_LINKEDIN_USERNAME`

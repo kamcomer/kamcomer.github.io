@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import ThemeToggle from '../ThemeToggle';
-import { navLinks } from './navbarConfig';
+import { devNavLinks, publicNavLinks } from './navbarConfig';
 
 const isHashLink = (to: string) => to.startsWith('/#');
 
@@ -13,9 +13,29 @@ const scrollToHash = (to: string) => {
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
 };
 
+const mobileNavItemClass =
+  'block border-l-2 border-transparent px-4 py-3 text-primary transition-colors hover:border-primary/45 hover:bg-primary/10 hover:text-text dark:text-primary-dark dark:hover:border-primary-dark/50 dark:hover:bg-primary-dark/15 dark:hover:text-text-dark'
+
+const mobileDevItemClass =
+  'block border-l-2 border-transparent px-6 py-2 pl-8 text-primary transition-colors hover:border-primary/45 hover:bg-primary/10 hover:text-text dark:text-primary-dark dark:hover:border-primary-dark/50 dark:hover:bg-primary-dark/15 dark:hover:text-text-dark'
+
 const MobileNav: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
   const closeMobileMenu = () => setIsMobileMenuOpen(false);
+
+  const handleHashNavigation = (to: string) => {
+    closeMobileMenu();
+
+    if (location.pathname === '/') {
+      scrollToHash(to);
+      return;
+    }
+
+    navigate('/');
+    window.setTimeout(() => scrollToHash(to), 50);
+  };
 
   return (
     <>
@@ -64,33 +84,16 @@ const MobileNav: React.FC = () => {
                 </div>
 
                 <nav className="flex-1 overflow-y-auto py-4">
-                  {navLinks.map((item) => (
+                  {publicNavLinks.map((item) => (
                     <div key={item.to}>
-                      {item.children ? (
-                        <>
-                          <div className="px-4 py-2 text-sm font-semibold text-muted dark:text-muted-dark">
-                            {item.label}
-                          </div>
-                          {item.children.map((child) => (
-                            <Link
-                              key={child.to}
-                              to={child.to}
-                              onClick={closeMobileMenu}
-                              className="block px-6 py-2 pl-8 text-primary dark:text-primary-dark hover:bg-bg2 dark:hover:bg-bg2-dark transition-colors"
-                            >
-                              {child.label}
-                            </Link>
-                          ))}
-                        </>
-                      ) : isHashLink(item.to) ? (
+                      {isHashLink(item.to) ? (
                         <a
                           href={item.to}
                           onClick={(e) => {
                             e.preventDefault();
-                            closeMobileMenu();
-                            scrollToHash(item.to);
+                            handleHashNavigation(item.to);
                           }}
-                          className="block px-4 py-3 text-primary dark:text-primary-dark hover:bg-bg2 dark:hover:bg-bg2-dark transition-colors"
+                          className={mobileNavItemClass}
                         >
                           {item.label}
                         </a>
@@ -101,13 +104,33 @@ const MobileNav: React.FC = () => {
                             closeMobileMenu();
                             if (item.to === '/') scrollToTop();
                           }}
-                          className="block px-4 py-3 text-primary dark:text-primary-dark hover:bg-bg2 dark:hover:bg-bg2-dark transition-colors"
+                          className={mobileNavItemClass}
                         >
                           {item.label}
                         </Link>
                       )}
                     </div>
                   ))}
+
+                  {devNavLinks.length > 0 && (
+                    <div className="mt-4 border-t border-borderMuted pt-4">
+                      <div className="px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-muted dark:text-muted-dark">
+                        Dev
+                      </div>
+                      {devNavLinks.flatMap((item) =>
+                        item.children?.map((child) => (
+                          <Link
+                            key={child.to}
+                            to={child.to}
+                            onClick={closeMobileMenu}
+                            className={mobileDevItemClass}
+                          >
+                            {child.label}
+                          </Link>
+                        )) ?? [],
+                      )}
+                    </div>
+                  )}
                 </nav>
 
                 <div className="p-4 border-t border-borderMuted">

@@ -31,7 +31,11 @@ const Skills = () => {
         Skills
       </SectionHeading>
 
-      <div className="grid md:grid-cols-3 gap-6">
+      <p className="mb-6 max-w-3xl text-sm leading-7 text-muted dark:text-muted-dark">
+        Curated to show the areas I work in most often, not every tool I have touched.
+      </p>
+
+      <div className="grid gap-6 md:grid-cols-2">
         {skillCategories.map((category) => (
           <div key={category.name}>
             <h4 className="text-sm font-semibold text-muted dark:text-muted-dark uppercase tracking-wider mb-3 border-b border-borderMuted dark:border-borderMuted pb-2">

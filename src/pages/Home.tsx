@@ -14,16 +14,16 @@ const Home = () => {
         <section id="about" className="py-12 scroll-mt-20">
           <AboutSection />
         </section>
-        <section id="experience" className="py-12">
+        <section id="experience" className="py-12 scroll-mt-20">
           <ExperienceTimeline />
         </section>
-        <section id="projects" className="py-12">
+        <section id="projects" className="py-12 scroll-mt-14">
           <FeaturedProjects />
         </section>
-        <section id="skills" className="py-12">
+        <section id="skills" className="py-12 scroll-mt-20">
           <Skills />
         </section>
-        <section id="contact" className="py-12">
+        <section id="contact" className="py-12 scroll-mt-20">
           <ContactForm />
         </section>
       </div>

@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import ThemeToggle from '../ThemeToggle';
-import { navLinks } from './navbarConfig';
+import { devNavLinks, publicNavLinks } from './navbarConfig';
 
 const isHashLink = (to: string) => to.startsWith('/#');
 
@@ -13,8 +13,18 @@ const scrollToHash = (to: string) => {
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
 };
 
+const navHoverClass =
+  'border border-transparent text-primary transition-colors duration-200 hover:border-primary/35 hover:bg-primary/10 hover:text-text dark:text-primary-dark dark:hover:border-primary-dark/40 dark:hover:bg-primary-dark/15 dark:hover:text-text-dark'
+
+const navActiveClass =
+  'border border-primary/35 bg-primary/12 text-text dark:border-primary-dark/40 dark:bg-primary-dark/18 dark:text-text-dark'
+
+const devMenuItemClass =
+  'block border-b border-borderMuted px-4 py-2 text-sm text-primary transition-colors last:border-b-0 hover:border-primary/35 hover:bg-primary/10 hover:text-text dark:text-primary-dark dark:hover:border-primary-dark/40 dark:hover:bg-primary-dark/15 dark:hover:text-text-dark'
+
 const DesktopNav: React.FC = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const isHomePage = location.pathname === '/';
 
   const [isDevMenuOpen, setIsDevMenuOpen] = useState(false);
@@ -50,6 +60,24 @@ const DesktopNav: React.FC = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  const handleHashNavigation = (to: string) => {
+    if (location.pathname === '/') {
+      scrollToHash(to);
+      return;
+    }
+
+    navigate('/');
+    window.setTimeout(() => scrollToHash(to), 50);
+  };
+
+  const isActiveLink = (to: string) => {
+    if (isHashLink(to)) {
+      return false;
+    }
+
+    return location.pathname === to;
+  };
+
   return (
     <AnimatePresence>
       {isVisible && (
@@ -60,17 +88,57 @@ const DesktopNav: React.FC = () => {
           transition={{ duration: 0.3 }}
           className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-4 bg-gradient-bg dark:bg-gradient-bg-dark border-b-2 border-primary"
         >
-          <div className="text-xl font-semibold text-primary dark:text-primary-dark">
+          <div className="text-xl font-semibold tracking-[0.12em] text-primary dark:text-primary-dark">
             <Link to="/">My Portfolio</Link>
           </div>
-          <div className="flex items-center gap-5">
-            {navLinks.map((item) => {
-              if (item.children) {
+          <div className="flex items-center gap-8">
+            <div className="flex items-center gap-2 border border-borderMuted bg-bg2/60 px-2 py-1 dark:bg-bg2-dark/60">
+              {publicNavLinks.map((item) => {
+              if (isHashLink(item.to)) {
                 return (
+                  <a
+                    key={item.to}
+                    href={item.to}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleHashNavigation(item.to);
+                    }}
+                    className={`px-3 py-2 text-sm ${navHoverClass}`}
+                  >
+                    {item.label}
+                  </a>
+                );
+              }
+
+              return (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  onClick={item.to === '/' ? scrollToTop : undefined}
+                  className={`px-3 py-2 text-sm ${
+                    isActiveLink(item.to)
+                      ? navActiveClass
+                      : navHoverClass
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+            </div>
+
+            {devNavLinks.length > 0 && (
+              <div className="flex items-center gap-3">
+                <span className="text-[10px] uppercase tracking-[0.3em] text-muted dark:text-muted-dark">
+                  Dev
+                </span>
+                {devNavLinks.map((item) => (
                   <div key={item.to} className="relative" ref={devMenuRef}>
                     <button
                       onClick={() => setIsDevMenuOpen(!isDevMenuOpen)}
-                      className="text-primary dark:text-primary-dark text-sm hover:text-primary/80 dark:hover:text-primary-dark/80 transition-colors duration-200 flex items-center gap-1"
+                      className={`flex items-center gap-1 px-3 py-2 text-sm ${
+                        isDevMenuOpen ? navActiveClass : navHoverClass
+                      }`}
                     >
                       {item.label}
                       <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -83,13 +151,13 @@ const DesktopNav: React.FC = () => {
                           initial={{ opacity: 0, y: -10 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -10 }}
-                          className="absolute top-full left-0 mt-2 w-40 bg-bg dark:bg-bg-dark border border-borderMuted shadow-lg"
+                          className="absolute right-0 top-full mt-2 w-40 border border-borderMuted bg-bg shadow-lg dark:bg-bg-dark"
                         >
-                          {item.children.map((child) => (
+                          {item.children?.map((child) => (
                             <Link
                               key={child.to}
                               to={child.to}
-                              className="block px-4 py-2 text-sm text-primary dark:text-primary-dark hover:bg-bg2 dark:hover:bg-bg2-dark transition-colors"
+                              className={devMenuItemClass}
                             >
                               {child.label}
                             </Link>
@@ -98,34 +166,10 @@ const DesktopNav: React.FC = () => {
                       )}
                     </AnimatePresence>
                   </div>
-                );
-              }
-              if (isHashLink(item.to)) {
-                return (
-                  <a
-                    key={item.to}
-                    href={item.to}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      scrollToHash(item.to);
-                    }}
-                    className="text-primary dark:text-primary-dark text-sm hover:text-primary/80 dark:hover:text-primary-dark/80 transition-colors duration-200"
-                  >
-                    {item.label}
-                  </a>
-                );
-              }
-              return (
-                <Link
-                  key={item.to}
-                  to={item.to}
-                  onClick={item.to === '/' ? scrollToTop : undefined}
-                  className="text-primary dark:text-primary-dark text-sm hover:text-primary/80 dark:hover:text-primary-dark/80 transition-colors duration-200"
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
+                ))}
+              </div>
+            )}
+
             <ThemeToggle />
           </div>
         </motion.nav>

@@ -11,10 +11,10 @@ export interface GithubRepo {
   homepage: string | null;
   license: string | null;
   default_branch: string;
+  topLanguages?: string[];
 }
 
 export interface CommitWeek {
   days: number[];
 }
-
 

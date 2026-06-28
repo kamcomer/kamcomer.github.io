@@ -11,6 +11,37 @@ const getGithubToken = (): string | undefined => {
   return import.meta.env.VITE_GITHUB_TOKEN;
 };
 
+const buildGithubHeaders = (): Record<string, string> => {
+  const headers: Record<string, string> = {};
+  const token = getGithubToken();
+
+  if (token) {
+    headers.Authorization = `token ${token}`;
+  }
+
+  return headers;
+};
+
+const getTopLanguages = async (
+  username: string,
+  repoName: string,
+): Promise<string[]> => {
+  try {
+    const headers = buildGithubHeaders();
+    const languagesResponse = await axios.get<Record<string, number>>(
+      `${GITHUB_API_BASE_URL}/repos/${username}/${repoName}/languages`,
+      { headers },
+    );
+
+    return Object.entries(languagesResponse.data)
+      .sort(([, a], [, b]) => b - a)
+      .slice(0, 2)
+      .map(([language]) => language);
+  } catch {
+    return [];
+  }
+};
+
 export const fetchGithubRepos = async (
   username: string,
 ): Promise<GithubReposResponse> => {
@@ -20,7 +51,7 @@ export const fetchGithubRepos = async (
     const per_page = 100;
     let fetched: GithubRepo[];
     do {
-      const headers: Record<string, string> = {};
+      const headers = buildGithubHeaders();
       const reposResponse = await axios.get<GithubRepo[]>(
         `${GITHUB_API_BASE_URL}/users/${username}/repos`,
         { params: { per_page, page }, headers },
@@ -29,7 +60,20 @@ export const fetchGithubRepos = async (
       allRepos = allRepos.concat(fetched);
       page++;
     } while (fetched.length === per_page);
-    return { repos: allRepos };
+
+    const repos = await Promise.all(
+      allRepos.map(async (repo) => {
+        const topLanguages = await getTopLanguages(username, repo.name);
+
+        if (topLanguages.length > 0) {
+          return { ...repo, topLanguages };
+        }
+
+        return repo.language ? { ...repo, topLanguages: [repo.language] } : repo;
+      }),
+    );
+
+    return { repos };
   } catch (error) {
     console.error("Error fetching GitHub repositories:", error);
     throw error;
@@ -38,15 +82,22 @@ export const fetchGithubRepos = async (
 
 export const fetchGithubRepo = async (
   username: string,
-  repoName: String,
+  repoName: string,
 ): Promise<GithubRepo | null> => {
   try {
-    const headers: Record<string, string> = {};
+    const headers = buildGithubHeaders();
     const repoResponse = await axios.get<GithubRepo>(
       `${GITHUB_API_BASE_URL}/repos/${username}/${repoName}`,
       { headers },
     );
-    return repoResponse.data;
+    const repo = repoResponse.data;
+    const topLanguages = await getTopLanguages(username, String(repoName));
+
+    if (topLanguages.length > 0) {
+      return { ...repo, topLanguages };
+    }
+
+    return repo.language ? { ...repo, topLanguages: [repo.language] } : repo;
   } catch (error) {
     console.error("Error fetching GitHub repository:", error);
     throw error;
@@ -63,9 +114,7 @@ export const fetchGithubCommitHistory = async (
     const per_page = 100;
     let fetched: GithubRepo[];
     do {
-      const headers: Record<string, string> = {};
-      const token = getGithubToken();
-      if (token) headers["Authorization"] = `token ${token}`;
+      const headers = buildGithubHeaders();
       const reposResponse = await axios.get<GithubRepo[]>(
         `${GITHUB_API_BASE_URL}/users/${username}/repos`,
         { params: { per_page, page }, headers },
@@ -85,9 +134,7 @@ export const fetchGithubCommitHistory = async (
     await Promise.all(
       repos.map(async (repo) => {
         try {
-          const headers: Record<string, string> = {};
-          const token = getGithubToken();
-          if (token) headers["Authorization"] = `token ${token}`;
+          const headers = buildGithubHeaders();
           const activityRes = await axios.get<
             Array<{ week: number; total: number; days: number[] }>
           >(

@@ -4,16 +4,12 @@ import SectionHeading from "../../ui/SectionHeading";
 import FeaturedProjectCard from "./FeaturedProjectCard";
 import { featuredProjects } from "../../../config";
 
-interface FeaturedProjectsProps {
-  username?: string;
-}
-
-function FeaturedProjects({ username }: FeaturedProjectsProps) {
+function FeaturedProjects() {
   return (
     <section className="py-12">
       <div className="flex items-center justify-between mb-8">
         <SectionHeading size="md" className="md:text-3xl">
-          Projects
+          Flagship Projects
         </SectionHeading>
         <Link
           to="/projects"
@@ -28,6 +24,12 @@ function FeaturedProjects({ username }: FeaturedProjectsProps) {
           No featured projects found.
         </p>
       ) : (
+        <div className="mb-6 border border-borderMuted bg-bg2 dark:bg-bg2-dark p-4 text-sm leading-7 text-muted dark:text-muted-dark">
+          A few projects that best represent how I think about distributed systems, low-level engineering, and product-facing backend work.
+        </div>
+      )}
+
+      {featuredProjects.length > 0 && (
         <div className="space-y-6">
           {featuredProjects.map((project, index) => {
             return (

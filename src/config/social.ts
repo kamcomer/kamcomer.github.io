@@ -6,6 +6,6 @@ interface SocialLinks {
 
 export const socialLinks: SocialLinks = {
   github: "kamcomer",
-  linkedin: "kameroncomer",
-  email: "hello@example.com",
+  linkedin: "kameron-comer",
+  email: "kameroncomer@gmail.com",
 };

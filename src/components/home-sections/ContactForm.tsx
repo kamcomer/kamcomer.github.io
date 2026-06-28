@@ -1,20 +1,13 @@
-import React, { useState, ChangeEvent, FormEvent } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import { socialLinks } from "../../config";
 import SectionHeading from "../ui/SectionHeading";
-import FormInput from "../ui/FormInput";
-import FormTextarea from "../ui/FormTextarea";
-
-interface FormState {
-  name: string;
-  email: string;
-  message: string;
-}
 
 interface SocialLink {
-  label: string;
-  url: string;
-  icon: string;
+  label: string
+  url: string
+  icon: string
+  detail: string
 }
 
 const links: SocialLink[] = [
@@ -22,37 +15,23 @@ const links: SocialLink[] = [
     label: "GitHub",
     url: `https://github.com/${socialLinks.github}`,
     icon: "GH",
+    detail: "Code, systems projects, and experiments",
   },
   {
     label: "LinkedIn",
     url: `https://linkedin.com/in/${socialLinks.linkedin}`,
     icon: "LI",
+    detail: "Professional background and direct outreach",
   },
-  { label: "Email", url: `mailto:${socialLinks.email}`, icon: "@" },
+  {
+    label: "Email",
+    url: `mailto:${socialLinks.email}`,
+    icon: "@",
+    detail: socialLinks.email,
+  },
 ];
 
 const ContactForm = () => {
-  const [form, setForm] = useState<FormState>({
-    name: "",
-    email: "",
-    message: "",
-  });
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    console.log(form);
-    setSubmitted(true);
-    setForm({ name: "", email: "", message: "" });
-    setTimeout(() => setSubmitted(false), 3000);
-  };
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -65,58 +44,45 @@ const ContactForm = () => {
         Contact
       </SectionHeading>
 
-      <div className="flex justify-center gap-4 mb-8">
-        {links.map((link) => (
-          <a
-            key={link.label}
-            href={link.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 px-4 py-2 bg-bg dark:bg-bg-dark border border-borderMuted dark:border-borderMuted text-text dark:text-text-dark text-sm font-mono hover:border-primary dark:hover:border-primary-dark transition-colors"
-          >
-            <span className="text-primary dark:text-primary-dark">
-              {link.icon}
-            </span>
-            <span>{link.label}</span>
-          </a>
-        ))}
+      <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr]">
+        <div className="border border-borderMuted bg-bg dark:bg-bg-dark p-5">
+          <p className="mb-3 text-xs uppercase tracking-[0.25em] text-primary dark:text-primary-dark">
+            Reach Out
+          </p>
+          <p className="text-sm leading-7 text-text dark:text-text-dark">
+            Open to software engineering roles, technical collaboration, and thoughtful systems conversations.
+          </p>
+          <p className="mt-3 text-sm leading-7 text-muted dark:text-muted-dark">
+            If something on the site is relevant to your team or project, email is the fastest path. LinkedIn works well for professional outreach, and GitHub is there if you want to inspect code first.
+          </p>
+        </div>
+
+        <div className="space-y-3">
+          {links.map((link) => (
+            <a
+              key={link.label}
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block border border-borderMuted bg-bg px-4 py-4 text-text transition-colors hover:border-primary hover:bg-primary/10 dark:bg-bg-dark dark:text-text-dark dark:hover:border-primary-dark dark:hover:bg-primary-dark/15"
+            >
+              <div className="flex items-center gap-3">
+                <span className="text-sm font-mono text-primary dark:text-primary-dark">
+                  {link.icon}
+                </span>
+                <div>
+                  <p className="text-sm font-medium">{link.label}</p>
+                  <p className="text-xs text-muted dark:text-muted-dark">
+                    {link.detail}
+                  </p>
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
       </div>
-
-      <form onSubmit={handleSubmit} className="max-w-lg mx-auto">
-        <FormInput
-          label="Name"
-          name="name"
-          value={form.name}
-          onChange={handleChange}
-          required
-        />
-        <FormInput
-          label="Email"
-          name="email"
-          type="email"
-          value={form.email}
-          onChange={handleChange}
-          required
-        />
-        <FormTextarea
-          label="Message"
-          name="message"
-          value={form.message}
-          onChange={handleChange}
-          required
-        />
-
-        <motion.button
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          type="submit"
-          className="w-full py-3 bg-gradient-primary dark:bg-gradient-primary-dark text-white dark:text-bg-dark text-sm font-medium hover:opacity-90 transition-opacity"
-        >
-          {submitted ? "Sent!" : "Send Message"}
-        </motion.button>
-      </form>
     </motion.div>
-  );
-};
+  )
+}
 
 export default ContactForm;

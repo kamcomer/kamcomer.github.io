@@ -9,7 +9,7 @@ interface PersonalInfo {
 export const personalInfo: PersonalInfo = {
   name: 'Kameron Comer',
   title: 'Software Engineer',
-  location: 'Grand Rapids, MI',
-  tagline: 'Software engineer with a background in electrical engineering',
-  bio: "Software engineer with a background in electrical engineering and a focus on building reliable, well-tested systems. My work spans embedded software validation across automotive communication protocols (I2C, SPI, CAN, LIN), full-stack application development, and owning automated testing platforms for enterprise financial services. I hold a Bachelor's degree in Electrical Engineering from Grand Valley State University.\n\nOutside of work, I enjoy building low-level projects — raycasting engines, HTTP servers, and distributed key-value stores — that scratch the itch for understanding how things work under the hood.",
+  location: 'Remote, US',
+  tagline: 'Software engineer focused on backend systems, platform tooling, and embedded-adjacent engineering',
+  bio: "I build backend services, internal platforms, and low-level systems with a focus on reliability, observability, and ownership across the full delivery cycle.\n\nMy background blends Python platform work, embedded validation across automotive protocols, and internal simulation tooling used to validate image recognition systems for automotive safety applications. That work gave me an early appreciation for the complexity of intelligent embedded systems and the importance of reliable engineering infrastructure.",
 };

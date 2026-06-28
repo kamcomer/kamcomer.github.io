@@ -1,56 +1,44 @@
+import frontendDemoGif from '../../assets/frontend-demo.gif';
+import kvstoreImage from '../../assets/kvstore.png';
 import { FeaturedProject } from "../types";
 
 export const featuredProjects: FeaturedProject[] = [
   {
-    name: "raycaster",
-    title: "Raycaster Engine",
+    name: "kvstore",
+    title: "Distributed Key Value Store",
     description:
-      "A raycasting engine implemented in C used to render a 3D environment from a 2D map, inspired by classic games like Wolfenstein 3D",
+      "Distributed systems flagship project implementing full Raft consensus in Python.",
     highlights: [
-      "Implemented a raycasting algorithm to render a 3D environment from a 2D map",
-      "Used SDL for graphics rendering and input handling",
-      "Implemented texture mapping for walls and sprites to enhance visual fidelity",
+      "Implemented leader election, log replication, snapshotting, and write-ahead logging with Python asyncio.",
+      "Added a FastAPI HTTP and RPC layer plus containerized local cluster deployment.",
+      "Tested failure and recovery scenarios on a 3-node Kubernetes cluster.",
     ],
-    techTags: ["SDL", "Graphics", "Game Development"],
+    techTags: ["Python", "Raft", "FastAPI", "Docker", "Kubernetes"],
+    imgUrl: kvstoreImage,
   },
   {
     name: "http-server",
     title: "HTTP Server",
     description:
-      "A HTTP server implemented in C using sockets to handle incoming requests and serve static files to multiple clients concurrently",
+      "Systems-focused C project showing protocol handling, concurrency, and low-level networking fundamentals.",
     highlights: [
-      "Implemented socket programming for handling incoming requests",
-      "Parsed HTTP requests and generated appropriate responses based on the requested resource",
-      "Supported serving static files and basic error handling",
-      "Understood and implemented HTTP protocol fundamentals",
+      "Implemented HTTP/1.1 request parsing and persistent keep-alive connections.",
+      "Served static files with non-blocking I/O and concurrent client handling.",
+      "Built directly on Linux socket primitives instead of higher-level frameworks.",
     ],
-    techTags: ["POSIX sockets"],
-  },
-  {
-    name: "kvstore",
-    title: "Distributed Key Value Store",
-    description:
-      "A key-value store implemented in Python utilizing full RAFT consensus algorithm for distributed state management",
-    highlights: [
-      "Implemented leader election, log replication, and state machine application to ensure consistency across distributed nodes",
-      "Utilized docker and kubernetes to containerize and orchestrate the deployment of the key-value store",
-      "Implemented a simple client library to interact with the key-value store and perform basic CRUD operations",
-    ],
-    techTags: ["FastAPI", "Docker", "Kubernetes"],
-    imgUrl: "/assets/kvstore.png",
+    techTags: ["C", "HTTP/1.1", "Non-blocking I/O", "Linux sockets"],
   },
   {
     name: "fastapi-mongo-movies",
     title: "Full Stack Movie App",
     description:
-      "A fullstack movie application built with React for the frontend, FastAPI for the backend, and MongoDB for the database",
+      "Breadth project demonstrating API design, frontend integration, and product-style CRUD workflows.",
     highlights: [
-      "Designed layered architecture (API → Service → Repository)",
-      "Built async backend handling hundreds of concurrent requests",
-      "Containerized with Docker Compose",
-      "Implemented search, filtering, and CRUD operations",
+      "Built a FastAPI backend with search, filtering, and CRUD operations.",
+      "Integrated a React frontend and containerized the app with Docker.",
+      "Added metrics capture for response times and rate limits.",
     ],
-    techTags: ["FastAPI", "MongoDB", "React", "TypeScript", "Docker"],
-    imgUrl: "/assets/frontend-demo.gif",
+    techTags: ["Python", "FastAPI", "MongoDB", "React", "Docker"],
+    imgUrl: frontendDemoGif,
   },
 ];

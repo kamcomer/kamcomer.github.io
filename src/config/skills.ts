@@ -5,48 +5,19 @@ interface SkillCategory {
 
 export const skillCategories: SkillCategory[] = [
   {
-    name: "Programming Languages",
-    skills: [
-      "Python",
-      "C",
-      "LabVIEW",
-      "JavaScript",
-      "TypeScript",
-      "HTML & CSS",
-      "SQL",
-      "Bash",
-    ],
+    name: "Core Languages",
+    skills: ["Python", "C/C++", "TypeScript", "JavaScript", "SQL", "PHP"],
   },
   {
-    name: "Frontend Technologies",
-    skills: ["React", "Vue", "Tailwind"],
+    name: "Backend & Platform",
+    skills: ["FastAPI", "REST APIs", "Async I/O", "Docker Compose", "Jenkins", "Observability"],
   },
   {
-    name: "Backend Technologies",
-    skills: [
-      "FastAPI",
-      "Node.js",
-      "Docker",
-      "REST APIs",
-      "TCP/IP",
-      "WebSockets",
-      "Microservices",
-    ],
+    name: "Infrastructure & Data",
+    skills: ["Docker", "Kubernetes", "MS SQL", "pandas", "NumPy", "Linux"],
   },
   {
-    name: "Embedded & Hardware",
-    skills: [
-      "I2C",
-      "SPI",
-      "UART",
-      "LIN",
-      "CAN",
-      "PCB Design",
-      "Circuit Design",
-    ],
-  },
-  {
-    name: "Tools & DevOps",
-    skills: ["Git", "Linux", "CI/CD", "AWS"],
+    name: "Embedded Systems",
+    skills: ["CAN", "UDS", "SPI/I2C", "UART", "LIN", "HIL tooling"],
   },
 ];
