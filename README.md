@@ -119,12 +119,20 @@ This repo is configured for deployment to the GitHub Pages repo site at:
 
 - `https://syntaxDuck.github.io/portfolio/`
 
-Deployment uses a GitHub Actions workflow in `.github/workflows/deploy-pages.yml`.
+Deployment uses a GitHub Actions workflow in `.github/workflows/deploy-gh-pages-branch.yml`.
 
 Notes:
 
 - The production Pages build uses a `/portfolio/` base path.
 - SPA deep links such as `/resume` and `/projects` are supported with a `404.html` redirect fallback.
+- The workflow publishes the built site to the `gh-pages` branch.
 - Set repository variables if needed:
   - `VITE_GITHUB_USERNAME`
   - `VITE_LINKEDIN_USERNAME`
+
+GitHub setup:
+
+1. Push `main`.
+2. In `Settings` → `Pages`, set `Source` to `Deploy from a branch`.
+3. Select branch `gh-pages` and folder `/ (root)`.
+4. Wait for the workflow to publish the branch, then reload the site.
