@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Redirecting...</title>
+    <script>
+      const pathSegmentsToKeep = 0;
+
+      const locationToRedirect =
+        window.location.protocol +
+        '//' +
+        window.location.hostname +
+        (window.location.port ? ':' + window.location.port : '') +
+        window.location.pathname
+          .split('/')
+          .slice(0, 1 + pathSegmentsToKeep)
+          .join('/') +
+        '/?/' +
+        window.location.pathname
+          .slice(1)
+          .split('/')
+          .slice(pathSegmentsToKeep)
+          .join('/')
+          .replace(/&/g, '~and~') +
+        (window.location.search
+          ? '&' + window.location.search.slice(1).replace(/&/g, '~and~')
+          : '') +
+        window.location.hash;
+
+      window.location.replace(locationToRedirect);
+    </script>
+  </head>
+  <body></body>
+</html>
