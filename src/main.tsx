@@ -19,6 +19,7 @@ import AchievementsPage from "./pages/demos/AchievementsPage";
 import EffectsPlayground from "./pages/demos/EffectsPlayground";
 import TerminalContextProvider from "./context/terminal/TerminalContextProvider";
 import { GithubReposProvider } from "./context/github/GithubReposProvider";
+import { ThemeProvider } from "./context/theme";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 export const AppContent = () => (
@@ -58,11 +59,13 @@ if (!rootElement) {
 createRoot(rootElement).render(
   <BrowserRouter>
     <StrictMode>
-      <TerminalContextProvider>
-        <GithubReposProvider>
-          <AppContent />
-        </GithubReposProvider>
-      </TerminalContextProvider>
+      <ThemeProvider>
+        <TerminalContextProvider>
+          <GithubReposProvider>
+            <AppContent />
+          </GithubReposProvider>
+        </TerminalContextProvider>
+      </ThemeProvider>
     </StrictMode>
   </BrowserRouter>,
 );
