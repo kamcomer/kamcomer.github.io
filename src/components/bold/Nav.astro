@@ -1,0 +1,21 @@
+---
+import ThemeToggle from "../shared/ThemeToggle.astro"
+import { links } from "../../data/profile"
+---
+
+<header class="fixed inset-x-0 top-4 z-40 flex justify-center px-4">
+  <nav
+    class="flex w-full max-w-3xl items-center gap-1 rounded-full border border-line bg-bg/75 p-1.5 pl-5 shadow-lg shadow-black/5 backdrop-blur-xl"
+  >
+    <a href="#top" class="mr-auto font-display text-lg font-bold tracking-tight">KC.</a>
+    <a href="#work" class="hidden rounded-full px-4 py-2 text-sm hover:bg-bg-2 sm:block">Work</a>
+    <a href="#journey" class="hidden rounded-full px-4 py-2 text-sm hover:bg-bg-2 sm:block">Journey</a>
+    <ThemeToggle class="rounded-full hover:bg-bg-2" />
+    <a
+      href={links.email}
+      class="rounded-full bg-pop px-4 py-2 text-sm font-semibold text-pop-ink transition-transform hover:scale-105"
+    >
+      Let's talk
+    </a>
+  </nav>
+</header>

@@ -38,3 +38,6 @@ coverage
 
 # Project specific
 AGENTS.md
+
+# Astro
+.astro

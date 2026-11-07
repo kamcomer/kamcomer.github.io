@@ -1,0 +1,48 @@
+---
+import { links, profile, social } from "../../data/profile"
+
+const channels = [
+  { label: "email", value: social.email, href: links.email },
+  { label: "github", value: `@${social.github}`, href: links.github },
+  { label: "linkedin", value: `in/${social.linkedin}`, href: links.linkedin },
+]
+---
+
+<section id="contact" class="border-b border-line">
+  <div class="mx-auto grid max-w-7xl border-x border-line lg:grid-cols-[1fr_28rem]">
+    <div class="px-4 py-16 md:px-8 md:py-24">
+      <p class="font-mono text-xs text-muted"><span class="text-primary">04</span> / contact</p>
+      <h2 class="mt-6 max-w-2xl text-4xl font-semibold tracking-tight md:text-6xl">
+        Have a system that needs to stay up?
+      </h2>
+      <p class="mt-6 max-w-xl text-lg text-muted">
+        I'm interested in backend, platform, and infrastructure roles where reliability matters.
+        The fastest way to reach me is email.
+      </p>
+    </div>
+    <ul class="border-t border-line lg:border-t-0 lg:border-l">
+      {
+        channels.map((c) => (
+          <li class="border-b border-line last:border-b-0">
+            <a
+              href={c.href}
+              class="group flex items-center justify-between gap-4 px-4 py-6 transition-colors hover:bg-fg hover:text-bg md:px-8 lg:py-8"
+            >
+              <span>
+                <span class="block font-mono text-xs text-muted group-hover:text-bg/70">{c.label}</span>
+                <span class="mt-1 block text-lg font-medium break-all">{c.value}</span>
+              </span>
+              <span class="font-mono text-xl transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
+                ↗
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+  <footer class="mx-auto flex max-w-7xl flex-wrap justify-between gap-2 border-x border-t border-line px-4 py-4 font-mono text-xs text-muted md:px-8">
+    <span>© {new Date().getFullYear()} {profile.name}</span>
+    <span>built with astro · static · no tracking</span>
+  </footer>
+</section>

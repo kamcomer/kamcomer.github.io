@@ -1,0 +1,32 @@
+---
+import Section from "./Section.astro"
+import { skillGroups } from "../../data/profile"
+---
+
+<Section id="stack" index="02" label="stack" title="What I work with">
+  <div class="grid gap-px bg-line sm:grid-cols-2 lg:grid-cols-4">
+    {
+      skillGroups.map((g) => (
+        <div class="group flex flex-col bg-bg">
+          <div class="flex items-center justify-between border-b border-line px-4 py-3 font-mono text-xs md:px-6">
+            <span class="text-muted">{g.name}</span>
+            <span class="border border-line px-1.5 text-primary transition-colors group-hover:border-primary">
+              {g.code}
+            </span>
+          </div>
+          <ul class="flex-1 px-4 py-4 md:px-6">
+            {g.skills.map((s) => (
+              <li class="flex items-center gap-3 py-1.5">
+                <span class="h-px w-3 bg-line-strong transition-all group-hover:w-5 group-hover:bg-primary" />
+                {s}
+              </li>
+            ))}
+          </ul>
+          <p class="border-t border-dashed border-line px-4 py-3 font-mono text-xs text-muted md:px-6">
+            proven in: <span class="text-fg">{g.proof.join(", ")}</span>
+          </p>
+        </div>
+      ))
+    }
+  </div>
+</Section>

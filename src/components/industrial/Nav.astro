@@ -1,0 +1,36 @@
+---
+import ThemeToggle from "../shared/ThemeToggle.astro"
+
+const items = [
+  { href: "#work", label: "work" },
+  { href: "#stack", label: "stack" },
+  { href: "#experience", label: "experience" },
+  { href: "#contact", label: "contact" },
+]
+---
+
+<header class="sticky top-0 z-40 border-b border-line bg-bg/85 backdrop-blur">
+  <nav class="mx-auto flex h-14 max-w-7xl items-stretch border-x border-line font-mono text-sm">
+    <a href="#top" class="flex items-center gap-2 border-r border-line px-4 font-semibold md:px-6">
+      <span class="text-primary">&gt;</span>kc<span class="animate-pulse text-primary">_</span>
+    </a>
+    <ul class="ml-auto hidden items-stretch sm:flex">
+      {
+        items.map((item, i) => (
+          <li class="flex">
+            <a
+              href={item.href}
+              class="flex items-center border-l border-line px-5 text-muted transition-colors hover:bg-bg-2 hover:text-fg"
+            >
+              <span class="mr-1.5 text-xs text-primary">0{i + 1}</span>
+              {item.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <div class="ml-auto flex border-l border-line sm:ml-0">
+      <ThemeToggle class="w-14 text-muted transition-colors hover:bg-bg-2 hover:text-fg" />
+    </div>
+  </nav>
+</header>

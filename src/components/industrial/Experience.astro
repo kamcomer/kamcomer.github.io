@@ -1,0 +1,47 @@
+---
+import Section from "./Section.astro"
+import { profile, roles } from "../../data/profile"
+---
+
+<Section id="experience" index="03" label="experience" title="Where I've shipped">
+  <div class="grid border-b border-line md:grid-cols-[12rem_1fr]">
+    <div class="hidden border-r border-line px-6 py-6 font-mono text-xs text-muted md:block">
+      about.md
+    </div>
+    <div class="max-w-3xl space-y-4 px-4 py-6 text-lg text-muted md:px-8">
+      {profile.bio.map((p) => <p>{p}</p>)}
+    </div>
+  </div>
+  <ol>
+    {
+      roles.map((r) => (
+        <li class="group grid border-b border-line last:border-b-0 md:grid-cols-[12rem_1fr]">
+          <div class="flex items-center gap-3 border-line px-4 pt-5 font-mono text-sm md:block md:border-r md:px-6 md:py-6">
+            <span class="text-fg">
+              {r.start === r.end ? r.start : `${r.start} — ${r.end}`}
+            </span>
+            {r.kind === "education" && (
+              <span class="text-xs text-secondary md:mt-1 md:block">education</span>
+            )}
+          </div>
+          <div class="grid gap-4 px-4 py-5 md:px-8 md:py-6 lg:grid-cols-[1fr_16rem]">
+            <div>
+              <h3 class="text-lg font-semibold">
+                {r.title}
+                <span class="font-normal text-muted"> @ {r.company}</span>
+              </h3>
+              <p class="mt-2 max-w-2xl text-muted">{r.summary}</p>
+            </div>
+            <ul class="flex flex-wrap content-start gap-1.5 lg:justify-end">
+              {r.tech.map((t) => (
+                <li class="border border-line px-2 py-0.5 font-mono text-xs text-muted transition-colors group-hover:border-line-strong">
+                  {t}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+</Section>

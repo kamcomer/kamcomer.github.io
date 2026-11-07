@@ -1,0 +1,54 @@
+---
+import "@fontsource-variable/inter-tight"
+import "@fontsource-variable/jetbrains-mono"
+import "../styles/global.css"
+import { profile } from "../data/profile"
+
+interface Props {
+  title?: string
+  description?: string
+}
+
+const {
+  title = `${profile.name} · ${profile.role}`,
+  description = profile.tagline,
+} = Astro.props
+const canonical = new URL(Astro.url.pathname, Astro.site)
+---
+
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate icon" href="/favicon.ico" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="theme-color" content="#0f1318" />
+    <script is:inline>
+      // Runs before paint so there is no light/dark flash
+      try {
+        if (localStorage.getItem("theme") === "light") {
+          document.documentElement.classList.remove("dark")
+        }
+      } catch {}
+    </script>
+  </head>
+  <body>
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:bg-fg focus:px-3 focus:py-2 focus:text-bg"
+    >
+      Skip to content
+    </a>
+    <slot />
+  </body>
+</html>

@@ -1,0 +1,130 @@
+---
+import { links, profile, yearsShipping } from "../../data/profile"
+import { getGithubStats } from "../../lib/github"
+
+const stats = await getGithubStats()
+const topLangs = stats.languages.slice(0, 3).map((l) => l.name)
+
+const readouts = [
+  { label: "years shipping", value: `${yearsShipping}+` },
+  { label: "public repos", value: stats.publicRepos ? String(stats.publicRepos) : "20+" },
+  { label: "top languages", value: topLangs.length ? topLangs.join(" · ") : "Python · C · TS" },
+  { label: "based in", value: profile.location },
+]
+---
+
+<section id="top" class="relative overflow-hidden border-b border-line">
+  <canvas
+    data-flow-field
+    class="absolute inset-0 size-full opacity-70 dark:opacity-90"
+    aria-hidden="true"></canvas>
+  <div class="bg-blueprint pointer-events-none absolute inset-0 opacity-40"></div>
+  <div
+    class="pointer-events-none absolute inset-0 bg-gradient-to-r from-bg via-bg/70 to-bg/10"
+  >
+  </div>
+
+  <div class="relative mx-auto max-w-7xl border-x border-line">
+    <div class="grid lg:grid-cols-[1fr_22rem]">
+      <div class="px-4 pt-16 pb-14 md:px-8 md:pt-28 md:pb-20">
+        <p class="mb-8 flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-xs uppercase tracking-widest text-muted">
+          <span>// {profile.role}</span>
+          {
+            profile.openToWork && (
+              <span class="inline-flex items-center gap-2 border border-ok/40 px-2 py-1 text-ok">
+                <span class="size-1.5 animate-pulse bg-ok" />
+                open to new roles
+              </span>
+            )
+          }
+        </p>
+        <h1 class="max-w-3xl text-5xl leading-[0.95] font-semibold tracking-tight sm:text-6xl md:text-7xl">
+          {profile.name}
+          <span class="mt-4 block text-3xl leading-tight font-medium text-muted sm:text-4xl md:text-5xl">
+            {profile.headline}
+          </span>
+        </h1>
+        <p class="mt-8 max-w-xl text-lg text-muted">{profile.tagline}</p>
+        <div class="mt-10 flex flex-wrap gap-3 font-mono text-sm">
+          <a
+            href="#work"
+            class="group inline-flex items-center gap-3 bg-fg px-5 py-3 text-bg transition-colors hover:bg-primary"
+          >
+            view_work
+            <span class="transition-transform group-hover:translate-x-1">→</span>
+          </a>
+          <a
+            href={links.email}
+            class="inline-flex items-center gap-3 border border-line-strong bg-bg/60 px-5 py-3 transition-colors hover:border-primary hover:text-primary"
+          >
+            get_in_touch
+          </a>
+          <a
+            href={links.github}
+            class="inline-flex items-center gap-3 border border-line-strong bg-bg/60 px-5 py-3 transition-colors hover:border-primary hover:text-primary"
+          >
+            github ↗
+          </a>
+        </div>
+      </div>
+
+      <aside class="hidden border-l border-line bg-bg/50 backdrop-blur-[2px] lg:flex lg:flex-col">
+        <div class="border-b border-line px-6 py-4 font-mono text-xs text-muted">
+          spec_sheet.yml
+        </div>
+        <dl class="flex-1 font-mono text-sm">
+          <div class="border-b border-line px-6 py-4">
+            <dt class="text-xs text-muted">focus:</dt>
+            <dd class="mt-2 space-y-1">
+              {
+                profile.focus.map((f) => (
+                  <div>
+                    <span class="text-primary">- </span>
+                    {f}
+                  </div>
+                ))
+              }
+            </dd>
+          </div>
+          <div class="border-b border-line px-6 py-4">
+            <dt class="text-xs text-muted">ships_with:</dt>
+            <dd class="mt-2">Python, C, TypeScript, Docker, K8s</dd>
+          </div>
+          <div class="px-6 py-4">
+            <dt class="text-xs text-muted">background:</dt>
+            <dd class="mt-2">Electrical engineering → automotive embedded → backend platforms</dd>
+          </div>
+        </dl>
+      </aside>
+    </div>
+
+    <dl class="grid grid-cols-2 border-t border-line bg-bg/80 backdrop-blur-sm md:grid-cols-4">
+      {
+        readouts.map((r, i) => (
+          <div
+            class:list={[
+              "px-4 py-5 md:px-6",
+              i % 2 === 1 && "border-l border-line",
+              i >= 2 && "border-t border-line md:border-t-0",
+              i === 2 && "md:border-l",
+            ]}
+          >
+            <dt class="font-mono text-[11px] uppercase tracking-widest text-muted">{r.label}</dt>
+            <dd class="mt-1 truncate text-xl font-semibold tracking-tight md:text-2xl">{r.value}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</section>
+
+<script>
+  import { mountFlowField } from "../../scripts/flowField"
+
+  const canvas = document.querySelector<HTMLCanvasElement>("[data-flow-field]")
+  if (canvas) {
+    // Let the page paint first; the hero reads fine without the animation
+    const idle = window.requestIdleCallback ?? ((cb: () => void) => setTimeout(cb, 200))
+    idle(() => mountFlowField(canvas))
+  }
+</script>

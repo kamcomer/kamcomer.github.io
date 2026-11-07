@@ -1,0 +1,92 @@
+---
+import { Image } from "astro:assets"
+import Section from "./Section.astro"
+import { links, projects, sideProjects } from "../../data/profile"
+---
+
+<Section id="work" index="01" label="work" title="Selected systems">
+  <ol>
+    {
+      projects.map((p, i) => (
+        <li class="group relative grid border-b border-line md:grid-cols-[12rem_1fr] lg:grid-cols-[12rem_1fr_24rem]">
+          <span class="absolute inset-x-0 top-0 h-px origin-left scale-x-0 bg-primary transition-transform duration-500 group-hover:scale-x-100" />
+          <div class="flex items-baseline justify-between gap-4 border-line px-4 pt-6 font-mono text-xs text-muted md:flex-col md:justify-start md:border-r md:px-6 md:py-8">
+            <span class="text-4xl font-semibold tracking-tight text-line-strong transition-colors group-hover:text-primary md:text-5xl">
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            <span class="uppercase tracking-widest">{p.kicker}</span>
+          </div>
+
+          <div class="px-4 py-6 md:px-8 md:py-8">
+            <h3 class="text-2xl font-semibold tracking-tight">{p.title}</h3>
+            <p class="mt-3 max-w-2xl text-muted">{p.summary}</p>
+            <ul class="mt-5 space-y-2 text-sm">
+              {p.highlights.map((h) => (
+                <li class="flex gap-3">
+                  <span class="mt-px font-mono text-primary">▸</span>
+                  <span>{h}</span>
+                </li>
+              ))}
+            </ul>
+            <div class="mt-6 flex flex-wrap items-center gap-2">
+              {p.tags.map((t) => (
+                <span class="border border-line px-2 py-0.5 font-mono text-xs text-muted">{t}</span>
+              ))}
+              <a
+                href={`${links.github}/${p.repo}`}
+                class="ml-auto font-mono text-sm text-primary underline-offset-4 hover:underline"
+              >
+                source ↗
+              </a>
+            </div>
+          </div>
+
+          <div class="hidden border-l border-line bg-bg-2 lg:block">
+            {p.image ? (
+              <Image
+                src={p.image}
+                alt={`${p.title} screenshot`}
+                widths={[400, 800]}
+                sizes="24rem"
+                class="size-full object-cover object-top grayscale transition duration-500 group-hover:grayscale-0"
+              />
+            ) : (
+              <div class="bg-blueprint flex size-full items-center justify-center p-8 font-mono text-xs leading-relaxed text-muted">
+                <pre aria-hidden="true">{`$ curl -i localhost:8080/
+HTTP/1.1 200 OK
+Connection: keep-alive
+Content-Type: text/html
+
+<!doctype html>…`}</pre>
+              </div>
+            )}
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+
+  <div class="grid grid-cols-[auto_1fr] md:grid-cols-[12rem_1fr]">
+    <div class="border-r border-line px-4 py-5 font-mono text-xs text-muted md:px-6">
+      also_built/
+    </div>
+    <ul class="grid gap-px bg-line sm:grid-cols-2 lg:grid-cols-3">
+      {
+        sideProjects.map((s) => (
+          <li class="bg-bg">
+            <a
+              href={`${links.github}/${s.repo}`}
+              class="group/side flex h-full flex-col gap-1 px-4 py-4 transition-colors hover:bg-bg-2 md:px-6"
+            >
+              <span class="flex items-center justify-between font-mono text-sm">
+                <span class="group-hover/side:text-primary">{s.title}</span>
+                <span class="text-xs text-muted">{s.lang}</span>
+              </span>
+              <span class="text-sm text-muted">{s.summary}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</Section>
