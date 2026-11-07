@@ -96,3 +96,21 @@
     linear-gradient(to bottom, var(--line) 1px, transparent 1px);
   background-size: 48px 48px;
 }
+
+/* Scroll-driven reveal; browsers without view timelines just show content */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 60%;
+    }
+  }
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(2.5rem) scale(0.98);
+  }
+}

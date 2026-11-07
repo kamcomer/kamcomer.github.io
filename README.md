@@ -1,138 +1,60 @@
-# Portfolio
+# kamcomer.github.io
 
-A personal portfolio website built with React, TypeScript, Vite, and Tailwind CSS. Features an industrial/technical aesthetic with interactive elements including a terminal emulator, GitHub integration, and blog capabilities.
+Personal portfolio for Kameron Comer: a static [Astro](https://astro.build) site with
+Tailwind CSS v4, deployed to GitHub Pages at **https://kamcomer.github.io**.
 
-## Tech Stack
+## Development
 
-- **Frontend**: React 19, TypeScript, Vite
-- **Styling**: Tailwind CSS
-- **Routing**: React Router DOM
-- **Animation**: Framer Motion
-- **Markdown**: React Markdown, React Syntax Highlighter
-- **Diagrams**: Mermaid
-- **HTTP**: Axios
+```bash
+npm install
+npm run dev       # http://localhost:4321
+npm run build     # astro check + static build into dist/
+npm run preview   # serve the production build
+```
 
-## Project Structure
+Requires Node 22.12+.
+
+## Editing content
+
+Nearly everything on the site comes from two files:
+
+| File | Contains |
+|------|----------|
+| `src/data/profile.ts` | Name, headline, bio, `openToWork` flag, socials, skills, experience |
+| `src/data/projects.ts` | Featured projects + case study content, "also built" side projects |
+
+- **Resume PDF:** drop a file at `public/resume.pdf` and the resume page's button switches
+  from "Save as PDF" (browser print) to a direct download.
+- **GitHub stats** (repo count, languages) are fetched at build time by `src/lib/github.ts`.
+  If GitHub is unreachable the build still succeeds with fallback values. Set `GITHUB_TOKEN`
+  to avoid anonymous rate limits.
+
+## Structure
 
 ```
 src/
-├── components/       # Reusable UI components
-│   ├── ui/          # Navbar, Footer
-│   └── *.tsx        # Feature components
-├── context/         # React context providers (Terminal)
-├── hooks/           # Custom React hooks
-├── pages/           # Route page components
-│   ├── Home.tsx
-│   ├── Projects.tsx
-│   ├── Blog.tsx
-│   ├── About.tsx
-│   ├── Playground.tsx
-│   └── demos/       # Interactive demo pages
-├── services/        # API services (GitHub)
-├── types/           # TypeScript definitions
-└── index.css        # Global styles
+├── components/
+│   ├── bold/          # Current design: hero, bento grid, journey, contact, nav
+│   ├── industrial/    # Alternate design, served at /industrial (noindex)
+│   └── shared/        # Theme toggle, ⌘K command palette
+├── data/              # Site content (see above)
+├── layouts/           # Base (head/SEO/theme) and Site (nav + footer + palette)
+├── lib/github.ts      # Build-time GitHub stats
+├── pages/             # /, /projects/[slug], /resume, /industrial, 404
+├── scripts/           # Flow-field canvas used by the industrial hero
+└── styles/global.css  # Theme tokens (light/dark) and Tailwind setup
 ```
 
-## Getting Started
+## Designs
 
-### Prerequisites
+Two directions were built. **Bold** is live at `/`. **Industrial** is still reachable at
+`/industrial` and is preserved in full on the `design/industrial` branch and the
+`checkpoint/two-directions` tag. To switch the home page back, render the industrial
+components from `src/pages/index.astro` (see `src/pages/industrial.astro`).
 
-- Node.js 18+
-- pnpm (recommended)
+The previous React version of the site lives on the `legacy/react-portfolio` branch.
 
-### Installation
+## Deployment
 
-```bash
-pnpm install
-```
-
-### Development
-
-```bash
-pnpm dev
-```
-
-Runs the development server at http://localhost:3000
-
-### Build
-
-```bash
-pnpm build
-```
-
-Runs TypeScript check and creates production build
-
-### Preview
-
-```bash
-pnpm preview
-```
-
-Preview the production build locally
-
-## Features
-
-- **Dark/Light Mode**: Toggle between themes
-- **GitHub Integration**: Fetch and display GitHub repositories and activity
-- **Blog**: Markdown-based blog posts with syntax highlighting
-- **Interactive Terminal**: Terminal emulator component for demos
-- **Animated Transitions**: Smooth page transitions with Framer Motion
-
-## Environment Variables
-
-Create a `.env` file (do NOT commit):
-
-```env
-VITE_GITHUB_USERNAME=your-username
-VITE_LINKEDIN_USERNAME=your-username
-```
-
-## Available Routes
-
-| Route | Description |
-|-------|-------------|
-| `/` | Home page with hero section |
-| `/projects` | GitHub projects showcase |
-| `/blog` | Blog posts |
-| `/blog/:slug` | Single blog post |
-| `/about` | About page with experience timeline |
-| `/dev/playground` | Playground with various demos |
-| `/demo/terminal` | Terminal emulator demo |
-| `/demo/github-activity` | GitHub activity visualization |
-| `/demo/code-playground` | Interactive code playground |
-| `/demo/ascii-art` | ASCII art generator |
-| `/demo/achievements` | Achievements showcase |
-
-## Commands
-
-| Command | Description |
-|---------|-------------|
-| `pnpm dev` | Start development server |
-| `pnpm build` | Build for production |
-| `npm run build:pages` | Build for GitHub Pages deployment |
-| `pnpm preview` | Preview production build |
-| `pnpm lint` | Run ESLint |
-
-## GitHub Pages
-
-This repo is configured for deployment to the GitHub Pages user site at:
-
-- `https://kamcomer.github.io/`
-
-Deployment uses a GitHub Actions workflow in `.github/workflows/deploy-gh-pages-branch.yml`.
-
-Notes:
-
-- The production build uses the site root `/` base path.
-- SPA deep links such as `/resume` and `/projects` are supported with a `404.html` redirect fallback.
-- The workflow publishes the built site to the `gh-pages` branch.
-- Set repository variables if needed:
-  - `VITE_GITHUB_USERNAME`
-  - `VITE_LINKEDIN_USERNAME`
-
-GitHub setup:
-
-1. Push `main`.
-2. In `Settings` → `Pages`, set `Source` to `Deploy from a branch`.
-3. Select branch `gh-pages` and folder `/ (root)`.
-4. Wait for the workflow to publish the branch, then reload the site.
+Pushing to `main` runs `.github/workflows/deploy-gh-pages-branch.yml`, which builds the site
+and publishes `dist/` to the `gh-pages` branch.

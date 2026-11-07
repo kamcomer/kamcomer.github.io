@@ -5,7 +5,7 @@ import tailwindcss from "@tailwindcss/vite"
 export default defineConfig({
   site: "https://kamcomer.github.io",
   base: "/",
-  integrations: [sitemap()],
+  integrations: [sitemap({ filter: (page) => !page.includes("/industrial") })],
   vite: {
     plugins: [tailwindcss()],
   },

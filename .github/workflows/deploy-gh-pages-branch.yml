@@ -24,17 +24,17 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Build for GitHub Pages
-        run: npm run build:pages
+      - name: Build site
+        run: npm run build
         env:
-          VITE_GITHUB_USERNAME: ${{ vars.VITE_GITHUB_USERNAME || 'kamcomer' }}
-          VITE_LINKEDIN_USERNAME: ${{ vars.VITE_LINKEDIN_USERNAME || 'kameron-comer' }}
+          # Lets the build-time GitHub stats call skip the anonymous rate limit
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish dist to gh-pages
         uses: peaceiris/actions-gh-pages@v4

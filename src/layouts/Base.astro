@@ -1,17 +1,21 @@
 ---
 import "@fontsource-variable/inter-tight"
 import "@fontsource-variable/jetbrains-mono"
+import "@fontsource-variable/space-grotesk"
 import "../styles/global.css"
 import { profile } from "../data/profile"
 
 interface Props {
   title?: string
   description?: string
+  /** Keep alternate designs out of search results */
+  noindex?: boolean
 }
 
 const {
   title = `${profile.name} · ${profile.role}`,
   description = profile.tagline,
+  noindex = false,
 } = Astro.props
 const canonical = new URL(Astro.url.pathname, Astro.site)
 ---
@@ -24,6 +28,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site)
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="alternate icon" href="/favicon.ico" />
     <link rel="sitemap" href="/sitemap-index.xml" />

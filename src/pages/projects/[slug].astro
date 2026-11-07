@@ -1,0 +1,190 @@
+---
+import type { GetStaticPaths } from "astro"
+import { Image } from "astro:assets"
+import Site from "../../layouts/Site.astro"
+import { links, projects } from "../../data/profile"
+import type { Project } from "../../data/profile"
+
+export const getStaticPaths = (() =>
+  projects.map((project, i) => ({
+    params: { slug: project.slug },
+    props: { project, nextProject: projects[(i + 1) % projects.length] },
+  }))) satisfies GetStaticPaths
+
+interface Props {
+  project: Project
+  nextProject: Project
+}
+
+const { project, nextProject } = Astro.props
+const cs = project.caseStudy
+const isGif = project.image?.format === "gif"
+---
+
+<Site title={`${project.title} · Kameron Comer`} description={project.summary}>
+  <article>
+    <header class="relative overflow-hidden px-4 pt-32 pb-16 md:px-8 md:pt-40">
+      <div class="pointer-events-none absolute -top-40 -right-40 size-[32rem] rounded-full bg-pop/20 blur-3xl"></div>
+      <div class="relative mx-auto max-w-7xl">
+        <a href="/#work" class="text-sm text-muted hover:text-fg">← All work</a>
+        <p class="mt-8">
+          <span class="rounded-full bg-pop px-3 py-1 text-xs font-semibold text-pop-ink">
+            {project.kicker}
+          </span>
+        </p>
+        <h1 class="mt-6 max-w-5xl font-display text-5xl leading-[0.95] font-bold tracking-tight md:text-8xl">
+          {project.title}
+        </h1>
+        <p class="mt-8 max-w-2xl text-xl text-muted">{project.summary}</p>
+        <div class="mt-8 flex flex-wrap items-center gap-3">
+          <a
+            href={`${links.github}/${project.repo}`}
+            class="rounded-full bg-fg px-6 py-3 font-semibold text-bg transition-transform hover:scale-105"
+          >
+            View source ↗
+          </a>
+          <ul class="flex flex-wrap gap-2">
+            {project.tags.map((t) => <li class="rounded-full border border-line px-3 py-1 text-sm">{t}</li>)}
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <!-- Metrics strip -->
+    <section aria-label="By the numbers" class="px-4 md:px-8">
+      <dl class="mx-auto grid max-w-7xl gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          cs.metrics.map((m, i) => (
+            <div
+              class:list={[
+                "reveal flex flex-col-reverse justify-end rounded-3xl border border-line p-6",
+                i === 0 ? "bg-pop text-pop-ink" : "bg-bg-3",
+              ]}
+            >
+              <dt class="mt-2 text-sm opacity-70">{m.label}</dt>
+              <dd class="font-display text-5xl font-bold tracking-tight">{m.value}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </section>
+
+    {
+      project.image && (
+        <figure class="reveal mt-4 px-4 md:px-8">
+          <div class="mx-auto max-w-7xl overflow-hidden rounded-3xl border border-line bg-bg-3">
+            {isGif ? (
+              <img
+                src={project.image.src}
+                width={project.image.width}
+                height={project.image.height}
+                alt={`${project.title} demo`}
+                loading="lazy"
+                class="w-full"
+              />
+            ) : (
+              <Image
+                src={project.image}
+                alt={`${project.title} visual`}
+                widths={[800, 1400]}
+                sizes="(min-width: 1280px) 80rem, 100vw"
+                class="max-h-[40rem] w-full object-cover"
+              />
+            )}
+          </div>
+        </figure>
+      )
+    }
+
+    <!-- Why + what -->
+    <section class="px-4 py-24 md:px-8">
+      <div class="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1fr_1.4fr]">
+        <div class="reveal">
+          <h2 class="font-display text-4xl font-bold tracking-tight md:text-5xl">Why I built it</h2>
+          <p class="mt-6 text-lg text-muted">{cs.problem}</p>
+        </div>
+        <div class="reveal">
+          <h2 class="font-display text-4xl font-bold tracking-tight md:text-5xl">What it does</h2>
+          <ul class="mt-6 space-y-3">
+            {
+              cs.built.map((b) => (
+                <li class="flex gap-4 rounded-2xl bg-bg-2 p-4">
+                  <span class="mt-1.5 size-2 shrink-0 rounded-full bg-pop" />
+                  <span set:html={b.replace(/`([^`]+)`/g, '<code class="font-mono text-sm">$1</code>')} />
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Architecture -->
+    <section class="border-y border-line bg-bg-2 px-4 py-24 md:px-8">
+      <div class="mx-auto max-w-7xl">
+        <h2 class="reveal font-display text-4xl font-bold tracking-tight md:text-5xl">How it's put together</h2>
+        <div class="mt-10 grid gap-6 lg:grid-cols-2">
+          {
+            cs.diagram && (
+              <pre
+                class="reveal overflow-x-auto rounded-3xl border border-line bg-bg p-6 font-mono text-xs leading-relaxed text-primary md:text-sm"
+                aria-label="Architecture diagram"
+              >{cs.diagram}</pre>
+            )
+          }
+          <ul class="reveal divide-y divide-line overflow-hidden rounded-3xl border border-line bg-bg">
+            {
+              cs.architecture.map((c) => (
+                <li class="flex flex-col gap-1 p-5 sm:flex-row sm:items-baseline sm:gap-6">
+                  <code class="shrink-0 font-mono text-sm font-semibold sm:w-48">{c.name}</code>
+                  <span class="text-muted">{c.role}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Engineering decisions -->
+    <section class="px-4 py-24 md:px-8">
+      <div class="mx-auto max-w-7xl">
+        <h2 class="reveal font-display text-4xl font-bold tracking-tight md:text-5xl">Engineering notes</h2>
+        <div class="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {
+            cs.engineering.map((e) => (
+              <div class="reveal rounded-3xl border border-line bg-bg-3 p-6 md:p-8">
+                <h3 class="font-display text-2xl font-bold tracking-tight">{e.title}</h3>
+                <p class="mt-3 text-muted">{e.body}</p>
+              </div>
+            ))
+          }
+          {
+            cs.next && (
+              <div class="reveal rounded-3xl border border-dashed border-line-strong p-6 md:p-8">
+                <h3 class="font-display text-2xl font-bold tracking-tight">Known gaps → next</h3>
+                <ul class="mt-3 space-y-2 text-muted">
+                  {cs.next.map((n) => <li>→ {n}</li>)}
+                </ul>
+              </div>
+            )
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Next project -->
+    <a
+      href={`/projects/${nextProject.slug}/`}
+      class="group block border-t border-line px-4 py-16 transition-colors hover:bg-pop hover:text-pop-ink md:px-8 md:py-24"
+    >
+      <div class="mx-auto flex max-w-7xl flex-wrap items-end justify-between gap-6">
+        <div>
+          <span class="text-sm opacity-60">Next case study</span>
+          <p class="mt-2 font-display text-4xl font-bold tracking-tight md:text-7xl">{nextProject.title}</p>
+        </div>
+        <span class="font-display text-5xl transition-transform group-hover:translate-x-2 md:text-7xl">→</span>
+      </div>
+    </a>
+  </article>
+</Site>

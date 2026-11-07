@@ -1,0 +1,149 @@
+---
+import { existsSync } from "node:fs"
+import { join } from "node:path"
+import Site from "../layouts/Site.astro"
+import { links, profile, projects, roles, skillGroups, social } from "../data/profile"
+
+// Drop a resume.pdf into public/ and the download button switches over automatically
+const hasPdf = existsSync(join(process.cwd(), "public", "resume.pdf"))
+const work = roles.filter((r) => r.kind === "work")
+const education = roles.filter((r) => r.kind === "education")
+const span = (r: (typeof roles)[number]) => (r.start === r.end ? r.start : `${r.start} – ${r.end}`)
+---
+
+<Site title="Resume · Kameron Comer" description={`Resume of ${profile.name}, ${profile.role}.`}>
+  <div class="px-4 pt-32 pb-24 md:px-8 md:pt-40 print:p-0">
+    <div class="mx-auto max-w-4xl">
+      <div class="mb-8 flex flex-wrap items-center justify-between gap-4 print:hidden">
+        <a href="/" class="text-sm text-muted hover:text-fg">← Home</a>
+        {
+          hasPdf ? (
+            <a
+              href="/resume.pdf"
+              download
+              class="rounded-full bg-pop px-6 py-3 font-semibold text-pop-ink transition-transform hover:scale-105"
+            >
+              Download PDF ↓
+            </a>
+          ) : (
+            <button
+              type="button"
+              data-print
+              class="rounded-full bg-pop px-6 py-3 font-semibold text-pop-ink transition-transform hover:scale-105"
+            >
+              Save as PDF ↓
+            </button>
+          )
+        }
+      </div>
+
+      <div class="resume rounded-3xl border border-line bg-bg-3 p-6 md:p-12 print:rounded-none print:border-0 print:p-0">
+        <header class="border-b border-line pb-8">
+          <h1 class="font-display text-5xl font-bold tracking-tight md:text-6xl">{profile.name}</h1>
+          <p class="mt-2 text-xl">{profile.role} · {profile.location}</p>
+          <ul class="mt-4 flex flex-wrap gap-x-5 gap-y-1 text-sm text-muted">
+            <li><a href={links.email} class="hover:text-fg">{social.email}</a></li>
+            <li><a href={links.github} class="hover:text-fg">github.com/{social.github}</a></li>
+            <li><a href={links.linkedin} class="hover:text-fg">linkedin.com/in/{social.linkedin}</a></li>
+            <li><a href="https://kamcomer.github.io" class="hover:text-fg">kamcomer.github.io</a></li>
+          </ul>
+          <p class="mt-6 text-muted">{profile.bio[0]}</p>
+        </header>
+
+        <section class="border-b border-line py-8">
+          <h2 class="text-xs font-semibold tracking-widest text-muted uppercase">Experience</h2>
+          <ol class="mt-6 space-y-7">
+            {
+              work.map((r) => (
+                <li class="break-inside-avoid">
+                  <div class="flex flex-wrap items-baseline justify-between gap-x-4">
+                    <h3 class="font-display text-xl font-bold">{r.company}</h3>
+                    <span class="font-mono text-sm text-muted">{span(r)}</span>
+                  </div>
+                  <p class="font-medium">{r.title}</p>
+                  <p class="mt-2 text-muted">{r.summary}</p>
+                  <p class="mt-2 font-mono text-xs text-muted">{r.tech.join(" · ")}</p>
+                </li>
+              ))
+            }
+          </ol>
+        </section>
+
+        <section class="border-b border-line py-8">
+          <h2 class="text-xs font-semibold tracking-widest text-muted uppercase">Selected projects</h2>
+          <ul class="mt-6 space-y-5">
+            {
+              projects.map((p) => (
+                <li class="break-inside-avoid">
+                  <h3 class="font-display text-lg font-bold">
+                    <a href={`/projects/${p.slug}/`} class="hover:underline">{p.title}</a>
+                    <span class="ml-2 font-mono text-xs font-normal text-muted">
+                      github.com/{social.github}/{p.repo}
+                    </span>
+                  </h3>
+                  <p class="mt-1 text-muted">{p.summary}</p>
+                </li>
+              ))
+            }
+          </ul>
+        </section>
+
+        <section class="grid gap-8 py-8 md:grid-cols-[1.5fr_1fr] print:grid-cols-[1.5fr_1fr]">
+          <div>
+            <h2 class="text-xs font-semibold tracking-widest text-muted uppercase">Skills</h2>
+            <dl class="mt-6 space-y-3">
+              {
+                skillGroups.map((g) => (
+                  <div>
+                    <dt class="font-semibold">{g.name}</dt>
+                    <dd class="text-muted">{g.skills.join(", ")}</dd>
+                  </div>
+                ))
+              }
+            </dl>
+          </div>
+          <div>
+            <h2 class="text-xs font-semibold tracking-widest text-muted uppercase">Education</h2>
+            {
+              education.map((r) => (
+                <div class="mt-6">
+                  <h3 class="font-display text-lg font-bold">{r.title}</h3>
+                  <p>{r.company}</p>
+                  <p class="font-mono text-sm text-muted">{span(r)}</p>
+                </div>
+              ))
+            }
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</Site>
+
+<script>
+  document.querySelector("[data-print]")?.addEventListener("click", () => window.print())
+</script>
+
+<style is:global>
+  @media print {
+    @page {
+      margin: 0.6in;
+    }
+    /* Always print in light ink regardless of the on-screen theme */
+    html.dark {
+      --bg: #fff;
+      --bg-2: #fff;
+      --bg-3: #fff;
+      --fg: #111;
+      --muted: #444;
+      --line: #ddd;
+      color-scheme: light;
+    }
+    #palette {
+      display: none;
+    }
+    .resume {
+      font-size: 10.5pt;
+    }
+  }
+</style>

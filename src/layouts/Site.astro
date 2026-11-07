@@ -1,0 +1,22 @@
+---
+import Base from "./Base.astro"
+import Nav from "../components/bold/Nav.astro"
+import Contact from "../components/bold/Contact.astro"
+import CommandPalette from "../components/shared/CommandPalette.astro"
+
+interface Props {
+  title?: string
+  description?: string
+}
+
+const { title, description } = Astro.props
+---
+
+<Base title={title} description={description}>
+  <Nav />
+  <main id="main" class="overflow-x-clip">
+    <slot />
+  </main>
+  <Contact />
+  <CommandPalette />
+</Base>
